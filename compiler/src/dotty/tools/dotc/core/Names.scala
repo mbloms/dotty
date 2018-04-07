@@ -34,7 +34,7 @@ object Names {
    */
   abstract class Designator extends util.DotClass
 
-  /** A name if either a term name or a type name. Term names can be simple
+  /** The name of either a term name or a type name. Term names can be simple
    *  or derived. A simple term name is essentially an interned string stored
    *  in a name table. A derived term name adds a tag, and possibly a number
    *  or a further simple name to some other name.

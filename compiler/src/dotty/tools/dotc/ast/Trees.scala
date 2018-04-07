@@ -374,7 +374,11 @@ object Trees {
     override def toString = s"SearchFailureIdent($name)"
   }
 
-  /** qualifier.name, or qualifier#name, if qualifier is a type */
+  /** qualifier.name, or qualifier#name, if qualifier is a type
+    * @constructor Tree object for e.g. method call.
+    * @param qualifier target object.
+    * @param name Name of class or type member.
+    */
   case class Select[-T >: Untyped] private[ast] (qualifier: Tree[T], name: Name)
     extends RefTree[T] {
     type ThisTree[-T >: Untyped] = Select[T]

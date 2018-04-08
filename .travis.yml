@@ -3,13 +3,11 @@
 {
   "language": "scala",
   "script": [
-    "sbt -Ddotty.travis.build=yes update compile test scalastyle"
+    "sbt test"
   ],
   "jdk": "oraclejdk8",
   "before_install": [
-    "cd ..",
-    "git clone https://github.com/scala/scala.git",
-    "cd dotty"
+    "git submodule update --init"
   ],
   "os": "linux"
 }

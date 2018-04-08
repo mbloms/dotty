@@ -716,7 +716,9 @@ object Trees {
     type ThisTree[-T >: Untyped] = Import[T]
   }
 
-  /** package pid { stats } */
+  /** package pid { stats }
+    * The top class.
+    */
   case class PackageDef[-T >: Untyped] private[ast] (pid: RefTree[T], stats: List[Tree[T]])
     extends ProxyTree[T] {
     type ThisTree[-T >: Untyped] = PackageDef[T]

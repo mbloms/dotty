@@ -16,13 +16,18 @@ class Dumper extends MiniPhase {
     */
   override def phaseName: String = "Dumper"
 
-  override def transformPackageDef(tree: tpd.PackageDef)(implicit ctx: Contexts.Context): tpd.Tree = {
+  /*override def transformPackageDef(tree: tpd.PackageDef)(implicit ctx: Contexts.Context): tpd.Tree = {
     println(tree)
     tree
-  }
+  }*/
 
   override def transformStats(trees: List[tpd.Tree])(implicit ctx: Contexts.Context): List[tpd.Tree] = {
     trees.map(println(_))
+    trees.map(t => println(t.tpe))
     trees
   }
+
+  /*override def transformTemplate(tree: tpd.Template)(implicit ctx: Contexts.Context): tpd.Tree = {
+    
+  }*/
 }

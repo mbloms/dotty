@@ -13,7 +13,7 @@ class MkPhantom extends MiniPhase {
 
   override def phaseName: String = "MkPhantom"
 
-  override def transformStats(trees: List[tpd.Tree])(implicit ctx: Contexts.Context): List[tpd.Tree] = {
+  /*override def transformStats(trees: List[tpd.Tree])(implicit ctx: Contexts.Context): List[tpd.Tree] = {
     for (declaration <- trees;
          typeDef <- (declaration match {
            case TypeDef(name, tree) => List(TypeDef(name, tree), TypeDef((name ++ "Phantom").toTypeName, tree))
@@ -29,5 +29,5 @@ class MkPhantom extends MiniPhase {
       //tree.tpe
       TypeDef(newName, Template(null, originalType :: Nil))
     }
-  }
+  }*/
 }

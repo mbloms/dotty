@@ -1,9 +1,7 @@
-
-
 {
   "language": "scala",
   "script": [
-    "sbt test"
+    "sbt \"dotc phantom-test/Phantom.scala\""
   ],
   "jdk": "oraclejdk8",
   "before_install": [
@@ -11,4 +9,3 @@
   ],
   "os": "linux"
 }
-

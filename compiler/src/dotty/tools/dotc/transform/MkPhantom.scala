@@ -12,7 +12,7 @@ import dotty.tools.dotc.core.Types._
 class MkPhantom extends MiniPhase {
 
   override def phaseName: String = "MkPhantom"
-
+/*
   /*override def transformStats(trees: List[tpd.Tree])(implicit ctx: Contexts.Context): List[tpd.Tree] = {
     for (declaration <- trees;
          typeDef <- (declaration match {

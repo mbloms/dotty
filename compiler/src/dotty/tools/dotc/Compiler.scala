@@ -63,7 +63,6 @@ class Compiler {
 //         new MkPhantom,
 //         new Dumper) :: 
     List(new FirstTransform,         // Some transformations to put trees into a canonical form
-         new Dumper,
          new CheckReentrant,         // Internal use only: Check that compiled program has no data races involving global vars
          new ElimPackagePrefixes) :: // Eliminate references to package prefixes in Select nodes
     List(new CheckStatic,            // Check restrictions that apply to @static members

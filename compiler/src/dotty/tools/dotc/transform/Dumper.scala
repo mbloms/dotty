@@ -1,6 +1,7 @@
 package dotty.tools.dotc
 package transform
 
+import dotty.tools.dotc.ast.Trees.PackageDef
 import dotty.tools.dotc.ast.tpd
 import dotty.tools.dotc.core.Contexts
 import dotty.tools.dotc.core.Phases._
@@ -22,12 +23,22 @@ class Dumper extends MiniPhase {
   }*/
 
   override def transformStats(trees: List[tpd.Tree])(implicit ctx: Contexts.Context): List[tpd.Tree] = {
-    trees.map(println(_))
-    trees.map(t => println(t.tpe))
+  //  trees.map(println(_))
+    //trees.map(t => println(t.tpe))
     trees
   }
+  
 
   /*override def transformTemplate(tree: tpd.Template)(implicit ctx: Contexts.Context): tpd.Tree = {
     
   }*/
+  override def transformUnit(tree: tpd.Tree)(implicit ctx: Contexts.Context): tpd.Tree = {
+    tree match {
+      case PackageDef(_,lst) => lst.map(println(_))
+    }
+    
+    tree
+
+  }
+  
 }

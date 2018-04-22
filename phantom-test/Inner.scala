@@ -4,9 +4,10 @@ class Fordon(val maxSpeed: Int) {
     def faster = Fordon(maxSpeed+1)
 }
 
+trait Phantom[T]
 
 object Fordon {
-    trait Phantom extends Fordon
+    sealed trait Phantom extends Fordon
     private class PhantomFordon1(maxSpeed: Int) extends Fordon(maxSpeed) with Phantom
     private class PhantomFordon2 extends Fordon() with Phantom
     def apply(): Phantom = new PhantomFordon2

@@ -291,6 +291,12 @@ object desugar {
     }
 
     val constr1 = decompose(defDef(constr0, isPrimaryConstructor = true))
+    println(constr1)
+    
+    val phantomTrait: TypeDef = {
+      val name = termName("Phantom")
+      TypeDef(name.toTypeName,Template(emptyConstructor,List(Ident(className)),makeSelfDef(name.toTermName,EmptyTypeIdent),Nil))
+    }
 
     // The original type and value parameters in the constructor already have the flags
     // needed to be type members (i.e. param, and possibly also private and local unless

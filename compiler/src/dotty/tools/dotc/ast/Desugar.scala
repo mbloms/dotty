@@ -266,8 +266,16 @@ object desugar {
 
   /** The expansion of a class definition. See inline comments for what is involved */
   def classDef(cdef: TypeDef)(implicit ctx: Context): Tree = {
-    val className = checkNotReservedName(cdef).asTypeName
+    val className: TypeName = checkNotReservedName(cdef).asTypeName
     val impl @ Template(constr0, parents, self, _) = cdef.rhs
+    println(cdef)
+    println(impl)
+    println(constr0)
+    println(parents)
+    parents match {
+      case Ident(p) :: _ => println(p.asInstanceOf[TypeName])
+      case _ => ()
+    }
     val mods = cdef.mods
     val companionMods = mods
         .withFlags((mods.flags & AccessFlags).toCommonFlags)

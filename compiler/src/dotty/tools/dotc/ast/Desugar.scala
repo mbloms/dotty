@@ -513,7 +513,7 @@ object desugar {
 
     // The companion object definitions, if a companion is needed, Nil otherwise.
     // companion definitions include:
-    // 1. If class is a case class case class C[Ts](p1: T1, ..., pN: TN)(moreParams):
+    // 1. If class is a case class C[Ts](p1: T1, ..., pN: TN)(moreParams):
     //     def apply[Ts](p1: T1, ..., pN: TN)(moreParams) = new C[Ts](p1, ..., pN)(moreParams)  (unless C is abstract)
     //     def unapply[Ts]($1: C[Ts]) = $1
     // 2. The default getters of the constructor

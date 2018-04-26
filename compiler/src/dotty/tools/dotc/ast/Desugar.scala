@@ -510,8 +510,10 @@ object desugar {
           className.toTermName, Template(emptyConstructor, parentTpt :: Nil, EmptyValDef, defs))
             .withMods(companionMods | Synthetic))
       .withPos(cdef.pos).toList
+    
+    def phantomStuff = if (cdef.mods.is(Synthetic)) Nil else List(phantomTrait)
 
-    val companionMembers = defaultGetters ::: eqInstances ::: enumCases
+    val companionMembers = phantomStuff ::: defaultGetters ::: eqInstances ::: enumCases
 
     // The companion object definitions, if a companion is needed, Nil otherwise.
     // companion definitions include:

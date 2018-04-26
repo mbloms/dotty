@@ -264,7 +264,9 @@ object Flags {
    */
   final val ParamAccessor = termFlag(14, "<paramaccessor>")
 
-    /** A value or class implementing a module */
+    /** A value or class implementing a module
+      * A singleton object or case object is a module.
+      */
   final val Module = commonFlag(15, "module")
   final val ModuleVal = Module.toTermFlags
   final val ModuleClass = Module.toTypeFlags

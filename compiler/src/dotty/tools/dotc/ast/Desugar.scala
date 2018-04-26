@@ -290,7 +290,7 @@ object desugar {
         meth
     }
 
-    val constr1 = decompose(defDef(constr0, isPrimaryConstructor = true))
+    val constr1: untpd.DefDef = decompose(defDef(constr0, isPrimaryConstructor = true))
     println(constr1)
     
     val phantomTrait: TypeDef = {

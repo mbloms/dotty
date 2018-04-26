@@ -315,12 +315,22 @@ object desugar {
           New(Ident(className))  ,
           name
         ),
-        vparamss.flatten
+        for (vparams <- vparamss;
+             ValDef(paramName,_,_) <- vparams)
+          yield Ident(paramName)
       )
       case _ => EmptyTree
     }
     
     println(constrToNew(constr1))
+    val phantom1: TypeDef = {
+      val name = termName("Phantom" + 1)
+      val phantom @ TypeDef(traitName,impl) = phantomTrait
+      TypeDef(
+        name.toTypeName,
+        Template(constr1,List(constrToNew(constr1),Ident(traitName)),EmptyValDef,Nil)
+      ).withMods((Modifiers(Synthetic | PrivateType | Final)))
+    }
     
     
     println(phantomTrait)
@@ -536,7 +546,8 @@ object desugar {
             .withMods(companionMods | Synthetic))
       .withPos(cdef.pos).toList
     
-    def phantomStuff = if (cdef.mods.is(Synthetic) || cdef.mods.is(ModuleOrFinal) || cdef.mods.is(Private)) Nil else List(phantomTrait)
+    def phantomStuff = if (cdef.mods.is(Synthetic) || cdef.mods.is(ModuleOrFinal) || cdef.mods.is(Private)) Nil else 
+      List(phantomTrait,phantom1)
 
     val companionMembers = phantomStuff ::: defaultGetters ::: eqInstances ::: enumCases
 

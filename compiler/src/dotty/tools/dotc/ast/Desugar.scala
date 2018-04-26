@@ -297,7 +297,7 @@ object desugar {
       val name = termName("Phantom")
       TypeDef(
         name.toTypeName,
-        Template(emptyConstructor,List(Ident(className)),makeSelfDef(nme.WILDCARD,EmptyTypeIdent),Nil)
+        Template(emptyConstructor,List(Ident(className)),EmptyValDef,Nil)
       ).withMods(Modifiers(Synthetic | Trait | Sealed))
     }
     /*

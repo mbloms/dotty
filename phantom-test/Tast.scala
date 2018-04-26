@@ -1,3 +1,1 @@
-class Bil {
-    trait Phantom
-}
+class Bil

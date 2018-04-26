@@ -295,7 +295,10 @@ object desugar {
     
     val phantomTrait: TypeDef = {
       val name = termName("Phantom")
-      TypeDef(name.toTypeName,Template(emptyConstructor,List(Ident(className)),makeSelfDef(name,EmptyTypeIdent),Nil)).withMods(Modifiers(Synthetic | Trait))
+      TypeDef(
+        name.toTypeName,
+        Template(emptyConstructor,List(Ident(className)),makeSelfDef(name,EmptyTypeIdent),Nil)
+      ).withMods(Modifiers(Synthetic | Trait))
     }
     
     println(phantomTrait)

@@ -514,7 +514,7 @@ object desugar {
             .withMods(companionMods | Synthetic))
       .withPos(cdef.pos).toList
     
-    def phantomStuff = if (cdef.mods.is(Synthetic)) Nil else List(phantomTrait)
+    def phantomStuff = if (cdef.mods.is(Synthetic) || cdef.mods.is(ModuleOrFinal) || cdef.mods.is(Private)) Nil else List(phantomTrait)
 
     val companionMembers = phantomStuff ::: defaultGetters ::: eqInstances ::: enumCases
 

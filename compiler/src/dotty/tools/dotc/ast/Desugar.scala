@@ -300,6 +300,28 @@ object desugar {
         Template(emptyConstructor,List(Ident(className)),makeSelfDef(name,EmptyTypeIdent),Nil)
       ).withMods(Modifiers(Synthetic | Trait))
     }
+    /*
+    List(
+      Apply(
+        Select(New(Ident(Bil)),<init>),
+        List(Literal(Constant(1)))
+      )
+    )
+    */
+    
+    def constrToNew(constr: untpd.DefDef): untpd.Tree = constr match {
+      case DefDef(name, _, vparamss,_,_) => Apply(
+        Select(
+          New(Ident(className))  ,
+          name
+        ),
+        vparamss.flatten
+      )
+      case _ => EmptyTree
+    }
+    
+    println(constrToNew(constr1))
+    
     
     println(phantomTrait)
 

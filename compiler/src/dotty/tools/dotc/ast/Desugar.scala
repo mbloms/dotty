@@ -309,45 +309,6 @@ object desugar {
     )
     */
     
-    def constrToNew(constr: untpd.DefDef): untpd.Tree = constr match {
-      case DefDef(name, _, vparamss,_,_) => Apply(
-        Select(
-          New(Ident(className))  ,
-          name
-        ),
-        for (vparams <- vparamss;
-             ValDef(paramName,_,_) <- vparams)
-          yield Ident(paramName)
-      )
-      case _ => EmptyTree
-    }
-    def printParams(t: untpd.MemberDef) = t.mods match {
-      case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
-    }
-    
-    val phantom1: TypeDef = {
-      val name = termName("Phantom" + 1)
-      val phantom @ TypeDef(traitName,impl) = phantomTrait
-      val constr = constr1 match {
-        case DefDef(name,tparams,vparamss,tpt,preRhs) =>
-          makeConstructor(tparams,
-            vparamss.map(_.map(_ match {
-              case vald @ ValDef(name,tpt,preRhs) => {
-                printParams(vald)
-                makeParameter(name,tpt,Modifiers(PrivateLocalParam))
-              }
-            } //param.withMods(Modifiers(PrivateLocalParamAccessor))))
-        )))
-      }
-      TypeDef(
-        name.toTypeName,
-        Template(constr1,List(constrToNew(constr),Ident(traitName)),EmptyValDef,Nil)
-      ).withMods((Modifiers(Synthetic | PrivateType | Final)))
-    }
-    
-    
-    println(phantomTrait)
-
     // The original type and value parameters in the constructor already have the flags
     // needed to be type members (i.e. param, and possibly also private and local unless
     // prefixed by type or val). `tparams` and `vparamss` are the type parameters that
@@ -450,6 +411,42 @@ object desugar {
     // a reference to the class type bound by `cdef`, with type parameters coming from the constructor
     val classTypeRef = appliedRef(classTycon)
 
+    def constrToNew(constr: untpd.DefDef): untpd.Tree = constr match {
+      case DefDef(name, _, vparamss,_,_) => Apply(
+        Select(
+          New(Ident(className))  ,
+          name
+        ),
+        for (vparams <- vparamss;
+             ValDef(paramName,_,_) <- vparams)
+          yield Ident(paramName)
+      )
+      case _ => EmptyTree
+    }
+    def printParams(t: untpd.MemberDef) = t.mods match {
+      case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
+    }
+    
+    val phantom1: TypeDef = {
+      val name = termName("Phantom" + 1)
+      val phantom @ TypeDef(traitName,impl) = phantomTrait
+      val constr = constr1 match {
+        case DefDef(name,tparams,vparamss,tpt,preRhs) =>
+          makeConstructor(tparams,
+            vparamss.map(_.map(_ match {
+              case vald @ ValDef(name,tpt,preRhs) => {
+                printParams(vald)
+                makeParameter(name,tpt,Modifiers(PrivateLocalParam))
+              }
+            } //param.withMods(Modifiers(PrivateLocalParamAccessor))))
+        )))
+      }
+      TypeDef(
+        name.toTypeName,
+        Template(constr1,List(constrToNew(constr),Ident(traitName)),EmptyValDef,Nil)
+      ).withMods((Modifiers(Synthetic | PrivateType | Final)))
+    }
+    
     // a reference to `enumClass`, with type parameters coming from the case constructor
     lazy val enumClassTypeRef =
       if (enumClass.typeParams.isEmpty)
@@ -559,7 +556,7 @@ object desugar {
             .withMods(companionMods | Synthetic))
       .withPos(cdef.pos).toList
     
-    def phantomStuff = if (cdef.mods.is(Synthetic) || cdef.mods.is(ModuleOrFinal) || cdef.mods.is(Private)) Nil else 
+    def phantomStuff = if (cdef.mods.is(Synthetic) || cdef.mods.is(ModuleOrFinal) || cdef.mods.is(Private)) Nil else
       List(phantomTrait,phantom1)
 
     val companionMembers = phantomStuff ::: defaultGetters ::: eqInstances ::: enumCases

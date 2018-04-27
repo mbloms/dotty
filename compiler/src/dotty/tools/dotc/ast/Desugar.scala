@@ -412,8 +412,10 @@ object desugar {
     val classTypeRef = appliedRef(classTycon)
 
     def constrToNew(constr: untpd.DefDef) = {
+      var n = 0
+      def paramIndex = {n += 1; n}
       val _ @ DefDef(name, tparams, vparamss, _, _) = constr
-      val signature: List[List[ValDef]] = vparamss.map(vparams => vparams.map { case ValDef(_, typ, _) => makeSyntheticParameter(tpt = typ).withFlags(PrivateLocalParamAccessor) })
+      val signature: List[List[ValDef]] = vparamss.map(vparams => vparams.map { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ).withFlags(PrivateLocalParamAccessor) })
 
       val argss = signature.map(args => args.map(arg => refOfDef(arg)))
 

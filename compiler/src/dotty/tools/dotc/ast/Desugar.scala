@@ -411,42 +411,28 @@ object desugar {
     // a reference to the class type bound by `cdef`, with type parameters coming from the constructor
     val classTypeRef = appliedRef(classTycon)
 
-    def constrToNew(constr: untpd.DefDef): untpd.Tree = constr match {
-      case DefDef(name, _, vparamss,_,_) => Apply(
-        Select(
-          New(Ident(className))  ,
-          name
-        ),
-        for (vparams <- vparamss;
-             ValDef(paramName,_,_) <- vparams)
-          yield Ident(paramName)
-      )
-      case _ => EmptyTree
+    def constrToNew(constr: untpd.DefDef) = {
+      val _ @ DefDef(name, tparams, vparamss, _, _) = constr
+      val signature: List[List[ValDef]] = vparamss.map(vparams => vparams.map { case ValDef(_, typ, _) => makeSyntheticParameter(tpt = typ).withFlags(PrivateLocalParamAccessor) })
+
+      val argss = signature.map(args => args.map(arg => refOfDef(arg)))
+
+      (makeConstructor(Nil,signature),New(classTypeRef,argss))
     }
     def printParams(t: untpd.MemberDef) = t.mods match {
       case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
     }
-    
+
     val phantom1: TypeDef = {
       val name = termName("Phantom" + 1)
       val phantom @ TypeDef(traitName,impl) = phantomTrait
-      val constr = constr1 match {
-        case DefDef(name,tparams,vparamss,tpt,preRhs) =>
-          makeConstructor(tparams,
-            vparamss.map(_.map(_ match {
-              case vald @ ValDef(name,tpt,preRhs) => {
-                printParams(vald)
-                makeParameter(name,tpt,Modifiers(PrivateLocalParam))
-              }
-            } //param.withMods(Modifiers(PrivateLocalParamAccessor))))
-        )))
-      }
+      val (constr,newParent) = constrToNew(constr1)
       TypeDef(
         name.toTypeName,
-        Template(constr1,List(constrToNew(constr),Ident(traitName)),EmptyValDef,Nil)
+        Template(constr,List(newParent,Ident(traitName)),EmptyValDef,Nil)
       ).withMods((Modifiers(Synthetic | PrivateType | Final)))
     }
-    
+
     // a reference to `enumClass`, with type parameters coming from the case constructor
     lazy val enumClassTypeRef =
       if (enumClass.typeParams.isEmpty)

@@ -321,14 +321,27 @@ object desugar {
       )
       case _ => EmptyTree
     }
+    def printParams(t: untpd.MemberDef) = t.mods match {
+      case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
+    }
     
-    println(constrToNew(constr1))
     val phantom1: TypeDef = {
       val name = termName("Phantom" + 1)
       val phantom @ TypeDef(traitName,impl) = phantomTrait
+      val constr = constr1 match {
+        case DefDef(name,tparams,vparamss,tpt,preRhs) =>
+          makeConstructor(tparams,
+            vparamss.map(_.map(_ match {
+              case vald @ ValDef(name,tpt,preRhs) => {
+                printParams(vald)
+                makeParameter(name,tpt,Modifiers(PrivateLocalParam))
+              }
+            } //param.withMods(Modifiers(PrivateLocalParamAccessor))))
+        )))
+      }
       TypeDef(
         name.toTypeName,
-        Template(constr1,List(constrToNew(constr1),Ident(traitName)),EmptyValDef,Nil)
+        Template(constr1,List(constrToNew(constr),Ident(traitName)),EmptyValDef,Nil)
       ).withMods((Modifiers(Synthetic | PrivateType | Final)))
     }
     

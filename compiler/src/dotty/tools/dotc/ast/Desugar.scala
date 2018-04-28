@@ -524,7 +524,7 @@ object desugar {
       var n = 0
       def paramIndex = {n += 1; n}
       val _ @ DefDef(name, tparams, vparamss, _, _) = constr
-      val signature: List[List[ValDef]] = vparamss nestedMap { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ).withFlags(PrivateLocalParamAccessor) }
+      val signature: List[List[ValDef]] = vparamss nestedMap { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ)}
       
       (signature,New(classTypeRef, signature nestedMap refOfDef))
     }

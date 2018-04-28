@@ -419,20 +419,20 @@ object desugar {
 
       val argss = signature.map(args => args.map(arg => refOfDef(arg)))
 
-      (makeConstructor(Nil,signature),New(classTypeRef,argss))
+      (signature,New(classTypeRef,argss))
     }
     def printParams(t: untpd.MemberDef) = t.mods match {
       case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
     }
 
-    val phantom1: TypeDef = {
-      val name = termName("Phantom" + 1)
+    val phantom1: MemberDef = {
+      val name = termName("newPhantom")
       val phantom @ TypeDef(traitName,impl) = phantomTrait
-      val (constr,newParent) = constrToNew(constr1)
-      TypeDef(
-        name.toTypeName,
-        Template(constr,List(newParent,Ident(traitName)),EmptyValDef,Nil)
-      ).withMods((Modifiers(Synthetic | PrivateType | Final)))
+      val (sign,newParent) = constrToNew(constr1)
+      DefDef(
+        name,Nil,sign,Ident(traitName),
+        New(Template(emptyConstructor,List(newParent,Ident(traitName)), EmptyValDef, Nil))
+      ).withMods((Modifiers(Synthetic)))
     }
 
     // a reference to `enumClass`, with type parameters coming from the case constructor

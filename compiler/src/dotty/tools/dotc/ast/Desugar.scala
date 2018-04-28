@@ -411,30 +411,6 @@ object desugar {
     // a reference to the class type bound by `cdef`, with type parameters coming from the constructor
     val classTypeRef = appliedRef(classTycon)
 
-    def constrToNew(constr: untpd.DefDef) = {
-      var n = 0
-      def paramIndex = {n += 1; n}
-      val _ @ DefDef(name, tparams, vparamss, _, _) = constr
-      val signature: List[List[ValDef]] = vparamss.map(vparams => vparams.map { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ).withFlags(PrivateLocalParamAccessor) })
-
-      val argss = signature.map(args => args.map(arg => refOfDef(arg)))
-
-      (signature,New(classTypeRef,argss))
-    }
-    def printParams(t: untpd.MemberDef) = t.mods match {
-      case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
-    }
-
-    val phantom1: MemberDef = {
-      val name = termName("newPhantom")
-      val phantom @ TypeDef(traitName,impl) = phantomTrait
-      val (sign,newParent) = constrToNew(constr1)
-      DefDef(
-        name,Nil,sign,Ident(traitName),
-        New(Template(emptyConstructor,List(newParent,Ident(traitName)), EmptyValDef, Nil))
-      ).withMods((Modifiers(Synthetic)))
-    }
-
     // a reference to `enumClass`, with type parameters coming from the case constructor
     lazy val enumClassTypeRef =
       if (enumClass.typeParams.isEmpty)
@@ -543,6 +519,30 @@ object desugar {
           className.toTermName, Template(emptyConstructor, parentTpt :: Nil, EmptyValDef, defs))
             .withMods(companionMods | Synthetic))
       .withPos(cdef.pos).toList
+
+    def constrToNew(constr: untpd.DefDef) = {
+      var n = 0
+      def paramIndex = {n += 1; n}
+      val _ @ DefDef(name, tparams, vparamss, _, _) = constr
+      val signature: List[List[ValDef]] = vparamss.map(vparams => vparams.map { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ).withFlags(PrivateLocalParamAccessor) })
+
+      val argss = signature.map(args => args.map(arg => refOfDef(arg)))
+
+      (signature,New(classTypeRef,argss))
+    }
+    def printParams(t: untpd.MemberDef) = t.mods match {
+      case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
+    }
+
+    val phantom1: MemberDef = {
+      val name = termName("newPhantom")
+      val phantom @ TypeDef(traitName,impl) = phantomTrait
+      val (sign,newParent) = constrToNew(constr1)
+      DefDef(
+        name,Nil,sign,Ident(traitName),
+        New(Template(emptyConstructor,List(newParent,Ident(traitName)), EmptyValDef, Nil))
+      ).withMods((Modifiers(Synthetic)))
+    }
     
     def phantomStuff = if (cdef.mods.is(Synthetic) || cdef.mods.is(ModuleOrFinal) || cdef.mods.is(Private)) Nil else
       List(phantomTrait,phantom1)

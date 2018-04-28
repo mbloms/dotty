@@ -524,11 +524,9 @@ object desugar {
       var n = 0
       def paramIndex = {n += 1; n}
       val _ @ DefDef(name, tparams, vparamss, _, _) = constr
-      val signature: List[List[ValDef]] = vparamss.map(vparams => vparams.map { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ).withFlags(PrivateLocalParamAccessor) })
-
-      val argss = signature.map(args => args.map(arg => refOfDef(arg)))
-
-      (signature,New(classTypeRef,argss))
+      val signature: List[List[ValDef]] = vparamss nestedMap { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ).withFlags(PrivateLocalParamAccessor) }
+      
+      (signature,New(classTypeRef, signature nestedMap refOfDef))
     }
     def printParams(t: untpd.MemberDef) = t.mods match {
       case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)

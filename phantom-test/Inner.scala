@@ -4,22 +4,27 @@ class Fordon(val maxSpeed: Int) {
     def get = x
     def this() = this(0)
 
-    def faster(implicit ev: Phantom[Fordon]) = Fordon(maxSpeed+1)
+    def faster = {
+        {val constr = implicitly[Int => Fordon]; constr(maxSpeed+1)}
+    }
 }
 
 object Fordon extends Phantom[Fordon] {
     sealed trait Phantom extends Fordon
-    private final class PhantomFordon1(maxSpeed: Int) extends Fordon(maxSpeed) with Phantom
-    private final class PhantomFordon2 extends Fordon() with Phantom
-    def apply(): Phantom = new PhantomFordon2
-    def apply(i: Int): Phantom = new PhantomFordon1(i)
+    implicit def PhantomFordon1(maxSpeed: Int): Phantom = new Fordon(maxSpeed) with Phantom
+    implicit def PhantomFordon2: Phantom = new Fordon() with Phantom
+    //implicit def simple(x: Unit): Phantom = PhantomFordon2
+    def apply[A](arg: A)(implicit constr: A => Phantom) = constr(arg)
+    //def apply(): Phantom = new PhantomFordon2
+    //def apply(i: Int): Phantom = new PhantomFordon1(i)
 }
 
 object Inner extends App {
     val f: Fordon = new Fordon
     val f1: Fordon = Fordon(2)
-    val f2: Fordon = Fordon()
-    val f3: Fordon = Bil(3)
+    val f2: Fordon = implicitly[Fordon]
+    val constr = implicitly[Int => Bil.Phantom]
+    val f3: Fordon = constr(3)
     //val f: Fordon = new Fordon
     println(f)
     println(f1)
@@ -34,15 +39,14 @@ object Inner extends App {
 
 trait Phantom[T]
 
-object Phantom {
-    implicit def fordon: Phantom[Fordon] = Fordon
-    implicit def bil: Phantom[Bil] = Bil
-}
+//object Phantom {
+//    def phantom[A,B](arg: A) = implicitly[]
+//}
 
 class Bil(maxSpeed: Int) extends Fordon(maxSpeed)
 
 object Bil extends Phantom[Bil] {
     sealed trait Phantom extends Bil with Fordon.Phantom
-    private final class PhantomBil1(maxSpeed: Int) extends Bil(maxSpeed) with Phantom
+    implicit final class PhantomBil1(maxSpeed: Int) extends Bil(maxSpeed) with Phantom
     def apply(i: Int): Phantom = new PhantomBil1(i)   
 }

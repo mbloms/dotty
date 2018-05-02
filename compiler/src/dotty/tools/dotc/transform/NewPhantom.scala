@@ -3,10 +3,11 @@ package transform
 
 import dotty.tools.dotc.ast.Trees._
 import dotty.tools.dotc.ast.tpd
-import dotty.tools.dotc.core.Contexts
+import dotty.tools.dotc.core.{Contexts, Names}
 import dotty.tools.dotc.core.Mode.InSuperCall
 import dotty.tools.dotc.core.Contexts._
-import dotty.tools.dotc.core.Phases._
+import dotty.tools.dotc.core.Flags._
+import dotty.tools.dotc.core.Names.termName
 import dotty.tools.dotc.transform.MegaPhase.MiniPhase
 import dotty.tools.dotc.util.Store
 
@@ -44,8 +45,23 @@ class NewPhantom extends MiniPhase {
     setBlacklist(true)
   }
 
-  override def transformNew(tree: tpd.New)(implicit ctx: Contexts.Context): tpd.Tree = {
-    println(ctx.mode.is(InSuperCall))
+
+  override def transformSelect(tree: tpd.Select)(implicit ctx: Context): tpd.Tree = tree match {
+    case e @ Select(New(i),init) => {
+      if (i.symbol.flags.is(ModuleOrFinal) || (ctx.mode.is(InSuperCall) && ctx.owner.isClassConstructor))
+        tree
+      else {
+        //val ret = tpd.Select(tpd.Ident(i.symbol.companionModule.name.toTermName),newPhantom).withPos(e)
+        val ret: tpd.Select = tpd.Select(cpy.Ident(i)(termName("Bil")),newPhantom)
+        println(ret)
+        println(ret.showSummary)
+        ret
+      }
+    }
+    case _ => tree
+  }
+
+  override def transformUnit(tree: tpd.Tree)(implicit ctx: Context): tpd.Tree = {
     println(tree.showSummary)
     tree
   }

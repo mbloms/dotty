@@ -10,7 +10,12 @@ import dotty.tools.dotc.core.Phases._
 import dotty.tools.dotc.transform.MegaPhase.MiniPhase
 import dotty.tools.dotc.util.Store
 
+object NewPhantom {
+  val newPhantom = termName("newPhantom")
+}
+
 class NewPhantom extends MiniPhase {
+  import NewPhantom._
   /** A name given to the `Phase` that can be used to debug the compiler. For
     * instance, it is possible to print trees after a given phase using:
     *

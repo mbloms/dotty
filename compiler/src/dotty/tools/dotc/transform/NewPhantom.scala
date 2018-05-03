@@ -4,11 +4,14 @@ package transform
 import dotty.tools.dotc.ast.Trees.{Apply, New, Select}
 import dotty.tools.dotc.ast.tpd
 import dotty.tools.dotc.ast.tpd.{TreeOps, ref}
-import dotty.tools.dotc.core.Contexts.Context
+import dotty.tools.dotc.core.Contexts.{Context, FreshContext}
 import dotty.tools.dotc.core.Flags.ModuleOrFinal
 import dotty.tools.dotc.core.Mode.InSuperCall
 import dotty.tools.dotc.core.Names.termName
+import dotty.tools.dotc.core.Signature
+import dotty.tools.dotc.core.StdNames.{nme, tpnme}
 import dotty.tools.dotc.transform.MegaPhase.MiniPhase
+import dotty.tools.dotc.util.Store
 
 object NewPhantom {
   val newPhantom = termName("newPhantom")
@@ -31,7 +34,7 @@ class NewPhantom extends MiniPhase {
         tree
       else {
         println(tree.showSummary)
-        ref(i.symbol.companionModule).select(newPhantom)
+        ref(i.symbol.companionModule).selectWithSig(newPhantom,tree.denot.signature)
       }
     }
     case _ => tree

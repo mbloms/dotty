@@ -2,7 +2,7 @@ language: scala
 jdk:
   - oraclejdk8
 script:
-  - sbt "dotc phantom-test/${PROJECT}.scala"
+  - sbt "dotc phantom-test/${CASE}.scala"
 before_install:
   - git submodule update --init
 cache:
@@ -19,5 +19,6 @@ before_cache:
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -type f -delete
 env:
   matrix:
-    - PROJECT=Tast
-    - PROJECT=Test
+    - CASE=Tast
+    - CASE=Test
+    - CASE=Poly

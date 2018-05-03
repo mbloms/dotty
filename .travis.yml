@@ -3,6 +3,8 @@ jdk:
   - oraclejdk8
 script:
   - sbt "dotc phantom-test/${PROJECT}.scala"
+before_install:
+  - git submodule update --init
 cache:
   directories:
   - $HOME/.sbt/0.13/dependency

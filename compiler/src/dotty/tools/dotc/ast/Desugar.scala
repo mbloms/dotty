@@ -525,7 +525,11 @@ object desugar {
       var n = 0
       def paramIndex = {n += 1; n}
       val _ @ DefDef(name, tparams, vparamss, _, _) = constr
-      val signature: List[List[ValDef]] = vparamss nestedMap { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ)}
+      var signature: List[List[ValDef]] = vparamss nestedMap { case ValDef(_, typ, _) => makeSyntheticParameter(paramIndex,typ)}
+
+      if (signature.isEmpty) {
+        signature = ListOfNil
+      }
       
       (signature,New(classTypeRef, signature nestedMap refOfDef))
     }
@@ -533,17 +537,25 @@ object desugar {
       case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
     }
 
-    val phantom1: MemberDef = {
-      val phantom @ TypeDef(traitName,impl) = phantomTrait
-      val (sign,newParent) = constrToNew(constr1)
+    val TypeDef(traitName,_) = phantomTrait
+    
+    def phantomDef(constr: untpd.DefDef) = {
+      val (sign,newParent) = constrToNew(constr)
       DefDef(
         newPhantom,Nil,sign,Ident(traitName),
         New(Template(emptyConstructor,List(newParent,Ident(traitName)), EmptyValDef, Nil))
       ).withMods((Modifiers(Synthetic)))
     }
     
+    val phantom1: MemberDef = phantomDef(constr1)
+    
+    def phantoms =
+      for (constr @ DefDef(name,_,_,_,_) <- impl.body
+           if name.isConstructorName)
+      yield phantomDef(constr)
+    
     def phantomStuff = if (cdef.mods.is(Synthetic) || cdef.mods.is(ModuleOrFinal) || cdef.mods.is(Private)) Nil else
-      List(phantomTrait,phantom1)
+      phantomTrait :: phantom1 :: phantoms
 
     val companionMembers = phantomStuff ::: defaultGetters ::: eqInstances ::: enumCases
 

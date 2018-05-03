@@ -25,16 +25,13 @@ class NewPhantom extends MiniPhase {
     */
   override def phaseName: String = "NewPhantom"
 
-  override def transformApply(tree: tpd.Apply)(implicit ctx: Context): tpd.Tree = tree match {
-    case Apply(Select(New(i),_),params) => {
+  override def transformSelect(tree: tpd.Select)(implicit ctx: Context): tpd.Tree = tree match {
+    case Select(New(i),_) => {
       if (i.symbol.flags.is(ModuleOrFinal) || (ctx.mode.is(InSuperCall) && ctx.owner.isClassConstructor))
         tree
       else {
-        println(tree)
-        val res = ref(i.symbol.companionModule).select(newPhantom)
-        if (params.isEmpty) res else {
-          cpy.Apply(tree)(res,params)
-        }
+        println(tree.showSummary)
+        ref(i.symbol.companionModule).select(newPhantom)
       }
     }
     case _ => tree

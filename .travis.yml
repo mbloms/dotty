@@ -2,10 +2,7 @@ language: scala
 jdk:
   - oraclejdk8
 script:
-  - sbt "testOnly -- *$PROJECT"
-before_install:
-  - git clone https://github.com/mbloms/dotty-community-build.git
-  - cd dotty-community-build
+  - sbt "dotc phantom-test/${PROJECT}.scala"
 cache:
   directories:
   - $HOME/.sbt/0.13/dependency
@@ -20,12 +17,5 @@ before_cache:
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -type f -delete
 env:
   matrix:
-    - PROJECT=algebra
-    - PROJECT=betterfiles
-    - PROJECT=scalacheck
-    - PROJECT=ScalaPB
-    - PROJECT=scalatest
-    - PROJECT=scopt
-    - PROJECT=squants
-    - PROJECT=collectionstrawman
-    - PROJECT=scalap
+    - PROJECT=Tast
+    - PROJECT=Test

@@ -2,12 +2,13 @@ package dotty.tools.dotc
 package transform
 
 import dotty.tools.dotc.ast.Trees._
-import dotty.tools.dotc.ast.tpd
+import dotty.tools.dotc.ast.tpd._
+import dotty.tools.dotc.ast.{Trees, tpd, untpd}
 import dotty.tools.dotc.core.{Contexts, Names}
 import dotty.tools.dotc.core.Mode.InSuperCall
 import dotty.tools.dotc.core.Contexts._
 import dotty.tools.dotc.core.Flags._
-import dotty.tools.dotc.core.Names.termName
+import dotty.tools.dotc.core.Names._
 import dotty.tools.dotc.core.NameOps._
 import dotty.tools.dotc.transform.MegaPhase.MiniPhase
 import dotty.tools.dotc.util.Store
@@ -47,22 +48,28 @@ class NewPhantom extends MiniPhase {
   }
 
 
-  override def transformApply(tree: tpd.Apply)(implicit ctx: Context): tpd.Tree = tree match {
-    case e @ Apply(s @ Select(New(i),init),params) => {
+  override def transformSelect(tree: tpd.Select)(implicit ctx: Context): tpd.Tree = {println(tree); tree match {
+    case e @ Select(New(i),init) => {
       if (i.symbol.flags.is(ModuleOrFinal) || (ctx.mode.is(InSuperCall) && ctx.owner.isClassConstructor))
         tree
       else {
         //val ret = tpd.Select(tpd.Ident(i.symbol.companionModule.name.toTermName),newPhantom).withPos(e)
-        val id @ Ident(name) = i
+        val Ident(name) = i
         val n = name.moduleClassName.toTermName
-        val ret = cpy.Apply(e)(tpd.Select(cpy.Ident(i)(n),newPhantom),params)
+        val ret = ref(i.symbol.companionModule).select(newPhantom)
+        println()
         println(ret)
         println(ret.showSummary)
         ret
       }
     }
+    case Select(i,method) => {
+      println(i.symbol.flags.flagStrings)
+      println(method)
+      tree
+    }
     case _ => tree
-  }
+  }}
 
   override def transformUnit(tree: tpd.Tree)(implicit ctx: Context): tpd.Tree = {
     println(tree.showSummary)

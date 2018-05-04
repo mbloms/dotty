@@ -269,14 +269,7 @@ object desugar {
   def classDef(cdef: TypeDef)(implicit ctx: Context): Tree = {
     val className: TypeName = checkNotReservedName(cdef).asTypeName
     val impl @ Template(constr0, parents, self, _) = cdef.rhs
-    println(cdef)
-    println(impl)
-    println(constr0)
-    println(parents)
-    parents match {
-      case Ident(p) :: _ => println(p.asInstanceOf[TypeName])
-      case _ => ()
-    }
+    
     val mods = cdef.mods
     val companionMods = mods
         .withFlags((mods.flags & AccessFlags).toCommonFlags)
@@ -292,7 +285,6 @@ object desugar {
     }
 
     val constr1: untpd.DefDef = decompose(defDef(constr0, isPrimaryConstructor = true))
-    println(constr1)
     
     val phantomTrait: TypeDef = {
       val name = typeName("Phantom")

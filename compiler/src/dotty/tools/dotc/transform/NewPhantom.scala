@@ -33,7 +33,6 @@ class NewPhantom extends MiniPhase {
       if (i.symbol.flags.is(ModuleOrFinal) || (ctx.mode.is(InSuperCall) && ctx.owner.isClassConstructor))
         tree
       else {
-        println(tree.showSummary)
         ref(i.symbol.companionModule).selectWithSig(newPhantom,tree.denot.signature)
       }
     }

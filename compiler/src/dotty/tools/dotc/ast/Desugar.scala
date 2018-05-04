@@ -295,9 +295,9 @@ object desugar {
     println(constr1)
     
     val phantomTrait: TypeDef = {
-      val name = termName("Phantom")
+      val name = typeName("Phantom")
       TypeDef(
-        name.toTypeName,
+        name,
         Template(emptyConstructor,List(Ident(className)),EmptyValDef,Nil)
       ).withMods(Modifiers(Synthetic | Trait | Sealed))
     }

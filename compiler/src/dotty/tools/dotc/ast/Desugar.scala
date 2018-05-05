@@ -270,6 +270,21 @@ object desugar {
     val className: TypeName = checkNotReservedName(cdef).asTypeName
     val impl @ Template(constr0, parents, self, _) = cdef.rhs
     
+    //println(cdef.showSummary(0))
+    //println(parents)
+
+    val notPhantom = Synthetic | ModuleOrFinal | Private
+    
+    def newToName(tree: Tree): Option[Name] = tree match {
+      case Ident(name) => Some(name.moduleClassName)
+      case New(t) => newToName(t)
+      case Apply(t,_) => newToName(t)
+      case Select(t,_) => newToName(t)
+      case TypedSplice(t) => newToName(t)
+      case TypeTree() => None
+      case _ => throw new Exception(tree.toString)
+    }
+    
     val mods = cdef.mods
     val companionMods = mods
         .withFlags((mods.flags & AccessFlags).toCommonFlags)
@@ -288,9 +303,13 @@ object desugar {
     
     val phantomTrait: TypeDef = {
       val name = typeName("Phantom")
+      val phantomParents = 
+        for (p <- parents;
+             n <- newToName(p).toList)
+        yield untpd.Select(Ident(n), name)
       TypeDef(
         name,
-        Template(emptyConstructor,List(Ident(className)),EmptyValDef,Nil)
+        Template(emptyConstructor, Ident(className) :: phantomParents,EmptyValDef,Nil)
       ).withMods(Modifiers(Synthetic | Trait | Sealed))
     }
     /*
@@ -546,7 +565,7 @@ object desugar {
            if name.isConstructorName)
       yield phantomDef(constr)
     
-    def phantomStuff = if (cdef.mods.is(Synthetic) || cdef.mods.is(ModuleOrFinal) || cdef.mods.is(Private)) Nil else
+    def phantomStuff = if (cdef.mods.is(notPhantom)) Nil else
       phantomTrait :: phantom1 :: phantoms
 
     val companionMembers = phantomStuff ::: defaultGetters ::: eqInstances ::: enumCases

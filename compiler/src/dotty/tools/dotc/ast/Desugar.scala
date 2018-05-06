@@ -276,7 +276,7 @@ object desugar {
     val notPhantom = Synthetic | ModuleOrFinal | Private
     
     def newToName(tree: Tree): Option[Name] = tree match {
-      case Ident(name) => Some(name.moduleClassName)
+      case Ident(name) => Some(name.sourceModuleName)
       case New(t) => newToName(t)
       case Apply(t,_) => newToName(t)
       case Select(t,_) => newToName(t)

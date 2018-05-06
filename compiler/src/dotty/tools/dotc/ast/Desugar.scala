@@ -272,8 +272,6 @@ object desugar {
     
     //println(cdef.showSummary(0))
     //println(parents)
-
-    val notPhantom = Synthetic | ModuleOrFinal | Private
     
     def newToName(tree: Tree): Option[Name] = tree match {
       case i @ Ident(name) if !i.symbol.flags.is(notPhantom) => Some(name.sourceModuleName)
@@ -301,7 +299,7 @@ object desugar {
     val constr1: untpd.DefDef = decompose(defDef(constr0, isPrimaryConstructor = true))
     
     lazy val phantomTrait: TypeDef = {
-      val name = typeName("Phantom")
+      val name = phantomName
       val phantomParents = 
         for (p <- parents;
              n <- newToName(p).toList)

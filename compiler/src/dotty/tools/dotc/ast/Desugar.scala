@@ -557,15 +557,17 @@ object desugar {
       ).withMods((Modifiers(Synthetic)))
     }
     
-    val phantom1: MemberDef = phantomDef(constr1)
+    lazy val phantom1: MemberDef = phantomDef(constr1)
     
-    def phantoms =
+    lazy val phantoms: List[MemberDef] =
       for (constr @ DefDef(name,_,_,_,_) <- impl.body
            if name.isConstructorName)
       yield phantomDef(constr)
     
-    def phantomStuff = if (cdef.mods.is(notPhantom)) Nil else
-      phantomTrait :: phantom1 :: phantoms
+    val phantomStuff: List[MemberDef] = if (cdef.mods.is(notPhantom)) Nil else
+      phantomTrait :: (
+        if (cdef.mods.is(AbstractOrTrait)) Nil
+        else phantom1 :: phantoms)
 
     val companionMembers = phantomStuff ::: defaultGetters ::: eqInstances ::: enumCases
 

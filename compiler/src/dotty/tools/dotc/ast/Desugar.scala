@@ -276,13 +276,12 @@ object desugar {
     val notPhantom = Synthetic | ModuleOrFinal | Private
     
     def newToName(tree: Tree): Option[Name] = tree match {
-      case Ident(name) => Some(name.sourceModuleName)
+      case i @ Ident(name) if !i.symbol.flags.is(notPhantom) => Some(name.sourceModuleName)
       case New(t) => newToName(t)
       case Apply(t,_) => newToName(t)
       case Select(t,_) => newToName(t)
       case TypedSplice(t) => newToName(t)
-      case TypeTree() => None
-      case _ => throw new Exception(tree.toString)
+      case _ => None
     }
     
     val mods = cdef.mods
@@ -301,7 +300,7 @@ object desugar {
 
     val constr1: untpd.DefDef = decompose(defDef(constr0, isPrimaryConstructor = true))
     
-    val phantomTrait: TypeDef = {
+    lazy val phantomTrait: TypeDef = {
       val name = typeName("Phantom")
       val phantomParents = 
         for (p <- parents;

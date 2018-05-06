@@ -22,3 +22,4 @@ env:
     - CASE=Tast
     - CASE=Test
     - CASE=Poly
+    - CASE=ListTest

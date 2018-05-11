@@ -517,7 +517,7 @@ object desugar {
           yield untpd.Select(Ident(n), name)
       TypeDef(
         name,
-        Template(emptyConstructor, Ident(className) :: phantomParents,EmptyValDef,Nil)
+        Template(makeConstructor(derivedTparams,Nil), classTypeRef :: phantomParents,EmptyValDef,Nil)
       ).withMods(Modifiers(Synthetic | Trait | Sealed))
     }
 
@@ -539,11 +539,15 @@ object desugar {
 
     val TypeDef(traitName,_) = phantomTrait
     
+    val traitIdent =
+      if (derivedTparams.isEmpty) Ident(traitName)
+      else appliedRef(Ident(traitName), derivedTparams)
+    
     def phantomDef(constr: untpd.DefDef) = {
       val (sign,newParent) = constrToNew(constr)
       DefDef(
-        newPhantom, derivedTparams, sign, Ident(traitName),
-        New(Template(emptyConstructor,List(newParent,Ident(traitName)), EmptyValDef, Nil))
+        newPhantom, derivedTparams, sign, traitIdent,
+        New(Template(emptyConstructor,List(newParent,traitIdent), EmptyValDef, Nil))
       ).withMods((Modifiers(Synthetic)))
     }
     

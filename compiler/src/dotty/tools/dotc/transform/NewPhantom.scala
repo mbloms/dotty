@@ -32,7 +32,7 @@ class NewPhantom extends MiniPhase {
 
   override def transformSelect(tree: tpd.Select)(implicit ctx: Context): tpd.Tree = tree match {
     case Select(New(i),_) => {
-      if (i.symbol.flags.is(notPhantom) || (ctx.mode.is(InSuperCall) && ctx.owner.isClassConstructor))
+      if (!i.symbol.isDefinedInCurrentRun || i.symbol.flags.is(notPhantom) || (ctx.mode.is(InSuperCall) && ctx.owner.isClassConstructor))
         tree
       else {
         ref(i.symbol.companionModule).selectWithSig(newPhantom,tree.denot.signature)

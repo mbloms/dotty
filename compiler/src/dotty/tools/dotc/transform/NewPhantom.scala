@@ -35,7 +35,11 @@ class NewPhantom extends MiniPhase {
       if (!i.symbol.isDefinedInCurrentRun || i.symbol.flags.is(notPhantom) || (ctx.mode.is(InSuperCall) && ctx.owner.isClassConstructor))
         tree
       else {
-        ref(i.symbol.companionModule).selectWithSig(newPhantom,tree.denot.signature)
+        try ref(i.symbol.companionModule).selectWithSig(newPhantom,tree.denot.signature)
+        catch {
+          case e: AssertionError => tree
+          case e: Throwable => tree
+        }
       }
     }
     case _ => tree

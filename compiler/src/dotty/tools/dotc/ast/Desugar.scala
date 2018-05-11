@@ -298,26 +298,6 @@ object desugar {
 
     val constr1: untpd.DefDef = decompose(defDef(constr0, isPrimaryConstructor = true))
     
-    lazy val phantomTrait: TypeDef = {
-      val name = phantomName
-      val phantomParents = 
-        for (p <- parents;
-             n <- newToName(p).toList)
-        yield untpd.Select(Ident(n), name)
-      TypeDef(
-        name,
-        Template(emptyConstructor, Ident(className) :: phantomParents,EmptyValDef,Nil)
-      ).withMods(Modifiers(Synthetic | Trait | Sealed))
-    }
-    /*
-    List(
-      Apply(
-        Select(New(Ident(Bil)),<init>),
-        List(Literal(Constant(1)))
-      )
-    )
-    */
-    
     // The original type and value parameters in the constructor already have the flags
     // needed to be type members (i.e. param, and possibly also private and local unless
     // prefixed by type or val). `tparams` and `vparamss` are the type parameters that
@@ -528,6 +508,18 @@ object desugar {
           className.toTermName, Template(emptyConstructor, parentTpt :: Nil, EmptyValDef, defs))
             .withMods(companionMods | Synthetic))
       .withPos(cdef.pos).toList
+
+    lazy val phantomTrait: TypeDef = {
+      val name = phantomName
+      val phantomParents =
+        for (p <- parents;
+             n <- newToName(p).toList)
+          yield untpd.Select(Ident(n), name)
+      TypeDef(
+        name,
+        Template(emptyConstructor, Ident(className) :: phantomParents,EmptyValDef,Nil)
+      ).withMods(Modifiers(Synthetic | Trait | Sealed))
+    }
 
     def constrToNew(constr: untpd.DefDef) = {
       var n = 0

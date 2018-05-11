@@ -1,4 +1,4 @@
-trait List
+trait List[T]
 
-class Nil() extends List
-class Cons(head: Int, tail: List) extends List
+class Nil() extends List[Nothing]
+class Cons[T](head: T, tail: List[T]) extends List[T]

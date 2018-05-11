@@ -6,7 +6,7 @@ class Volvo extends Bil(1)
 final class Saab(i: Int) extends Bil(i)
 
 object Main extends App {
-    val b: Bil = new Bil(4)
+    val b: Bil = new Volvo
     println(b)
     println(new Bil)
     println(new Bil(2))

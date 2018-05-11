@@ -550,7 +550,7 @@ object desugar {
     def phantomDef(constr: untpd.DefDef) = {
       val (sign,newParent) = constrToNew(constr)
       DefDef(
-        newPhantom,Nil,sign,Ident(traitName),
+        newPhantom, derivedTparams, sign, Ident(traitName),
         New(Template(emptyConstructor,List(newParent,Ident(traitName)), EmptyValDef, Nil))
       ).withMods((Modifiers(Synthetic)))
     }

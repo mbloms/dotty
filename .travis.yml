@@ -23,3 +23,4 @@ env:
     - CASE=Test
     - CASE=Poly
     - CASE=ListTest
+    - CASE=Stream

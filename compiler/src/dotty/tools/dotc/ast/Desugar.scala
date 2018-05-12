@@ -273,15 +273,6 @@ object desugar {
     //println(cdef.showSummary(0))
     //println(parents)
     
-    def newToName(tree: Tree): Option[Name] = tree match {
-      case i @ Ident(name) if !i.symbol.flags.is(notPhantom) => Some(name.sourceModuleName)
-      case New(t) => newToName(t)
-      case Apply(t,_) => newToName(t)
-      case Select(t,_) => newToName(t)
-      case TypedSplice(t) => newToName(t)
-      case _ => None
-    }
-    
     val mods = cdef.mods
     val companionMods = mods
         .withFlags((mods.flags & AccessFlags).toCommonFlags)
@@ -509,12 +500,23 @@ object desugar {
             .withMods(companionMods | Synthetic))
       .withPos(cdef.pos).toList
 
+    lazy val phantomParents = {
+      def newToName(tree: Tree): Option[Tree] = tree match {
+        case i @ Ident(name) if !i.symbol.flags.is(notPhantom) =>
+          Some(untpd.Select(Ident(name.sourceModuleName), phantomName))
+        case New(t) => newToName(t)
+        case Apply(t,_) => newToName(t)
+        case Select(t,_) => newToName(t)
+        case TypedSplice(t) => newToName(t)
+        case _ => None
+      }
+      
+      parents.flatMap(newToName)
+    }
+    
     lazy val phantomTrait: TypeDef = {
+
       val name = phantomName
-      val phantomParents =
-        for (p <- parents;
-             n <- newToName(p).toList)
-          yield untpd.Select(Ident(n), name)
       TypeDef(
         name,
         Template(makeConstructor(derivedTparams,Nil), classTypeRef :: phantomParents,EmptyValDef,Nil)

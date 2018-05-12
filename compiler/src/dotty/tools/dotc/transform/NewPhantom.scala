@@ -15,7 +15,7 @@ import dotty.tools.dotc.util.Store
 
 object NewPhantom {
   val newPhantom = termName("newPhantom")
-  val notPhantom = Synthetic | ModuleOrFinal | Private
+  val notPhantom = Synthetic | ModuleOrFinal
   val phantomName = typeName("Phantom")
 }
 

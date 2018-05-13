@@ -37,8 +37,14 @@ class NewPhantom extends MiniPhase {
       else {
         try ref(i.symbol.companionModule).selectWithSig(newPhantom,tree.denot.signature)
         catch {
-          case e: AssertionError => tree
-          case e: Throwable => tree
+          case e: AssertionError => {
+            e.printStackTrace()
+            tree
+          }
+          case e: Throwable => {
+            e.printStackTrace()
+            tree
+          }
         }
       }
     }

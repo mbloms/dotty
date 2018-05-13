@@ -515,10 +515,8 @@ object desugar {
     }
     
     lazy val phantomTrait: TypeDef = {
-
-      val name = phantomName
       TypeDef(
-        name,
+        phantomName,
         Template(makeConstructor(derivedTparams,Nil), classTypeRef :: phantomParents,EmptyValDef,Nil)
       ).withMods(Modifiers(Synthetic | Trait | Sealed))
     }

@@ -518,7 +518,7 @@ object desugar {
       TypeDef(
         phantomName,
         Template(makeConstructor(derivedTparams,Nil), classTypeRef :: phantomParents,EmptyValDef,Nil)
-      ).withMods(Modifiers(Synthetic | Trait | Sealed))
+      ).withMods(Modifiers(Synthetic | Trait))
     }
 
     def constrToNew(constr: untpd.DefDef) = {

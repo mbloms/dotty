@@ -673,7 +673,7 @@ object desugar {
           Nil
       }
       val parents =
-        if (cdef.mods.is(Final) && cdef.mods.is(Synthetic))
+        if (cdef.mods.is(Final) && !cdef.mods.is(Synthetic))
           parents1 ::: phantomParents
         else
          parents1

@@ -560,12 +560,12 @@ object desugar {
            if name.isConstructorName)
       yield phantomDef(constr)
     
-    val phantomStuff: List[MemberDef] = if (cdef.mods.is(notPhantom)) Nil else
+    val phantomMembers: List[MemberDef] = if (cdef.mods.is(notPhantom)) Nil else
       phantomTrait :: (
         if (cdef.mods.is(AbstractOrTrait)) Nil
         else phantom1 :: phantoms)
 
-    val companionMembers = phantomStuff ::: defaultGetters ::: eqInstances ::: enumCases
+    val companionMembers = phantomMembers ::: defaultGetters ::: eqInstances ::: enumCases
 
     // The companion object definitions, if a companion is needed, Nil otherwise.
     // companion definitions include:

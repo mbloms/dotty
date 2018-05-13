@@ -15,3 +15,5 @@ object Main extends App {
     println(f)
     println(f.getClass)
 }
+
+class Kärra extends Bil

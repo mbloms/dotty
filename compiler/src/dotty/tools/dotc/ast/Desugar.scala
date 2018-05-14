@@ -536,12 +536,12 @@ object desugar {
     def printParams(t: untpd.MemberDef) = t.mods match {
       case Modifiers(flags, privateWithin, annotations, mods) => println(flags.flagStrings)
     }
-
-    val TypeDef(traitName,_) = phantomTrait
     
-    val traitIdent =
+    lazy val traitIdent = { 
+      val TypeDef(traitName,_) = phantomTrait
       if (derivedTparams.isEmpty) Ident(traitName)
       else appliedRef(Ident(traitName), derivedTparams)
+    }
     
     def phantomDef(constr: untpd.DefDef) = {
       val (sign,newParent) = constrToNew(constr)

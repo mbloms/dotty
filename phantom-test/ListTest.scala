@@ -7,6 +7,6 @@ sealed class Car
 sealed class Volvo extends Car
 
 object Main extends App {
-    val x: List[Car] = new Cons(new Volvo, new Nil())
+    val x: List[Car] = new Cons[Volvo](new Volvo, new Nil())
     println(x)
 }

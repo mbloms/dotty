@@ -4,6 +4,6 @@ class Car
 class Volvo extends Car
 
 object Main extends App {
-    val x: Stream[Volvo] = new Stream(new Car , null)
+    val x: Stream[Volvo] = new Stream[Car](new Car , null)
     println(x)
 }

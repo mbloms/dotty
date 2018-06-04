@@ -502,7 +502,7 @@ object desugar {
 
     lazy val phantomParents = {
       def newToName(tree: Tree): Option[Tree] = tree match {
-        case i @ Ident(name) if !i.symbol.flags.is(notPhantom) =>
+        case i @ Ident(name) if i.symbol.isDefinedInCurrentRun && !i.symbol.flags.is(notPhantom) =>
           Some(untpd.Select(Ident(name.sourceModuleName), phantomName))
         case New(t) => newToName(t)
         case Apply(t,_) => newToName(t)

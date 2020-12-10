@@ -96,7 +96,7 @@ export    extends   false     final     finally   for       given     if
 implicit  import    lazy      match     new       null      object    package
 private   protected override  return    super     sealed    then      throw
 trait     true      try       type      val       var       while     with
-yield
+yield     let       in
 :         =         <-        =>        <:        :>        #         @
 =>>       ?=>
 ```
@@ -104,7 +104,7 @@ yield
 ### Soft keywords
 
 ```
-as  derives  end  extension  inline  opaque  open  transparent  using
+as  derives  end  extension  inline  opaque  open  transparent  using  where
 *  +  -
 ```
 
@@ -142,6 +142,7 @@ Type              ::=  FunType
                     |  FunParamClause ‘=>>’ Type                                TermLambdaTypeTree(ps, t)
                     |  MatchType
                     |  InfixType
+                    |  StructuralType
 FunType           ::=  FunArgTypes (‘=>’ | ‘?=>’) Type                          Function(ts, t)
                     |  HKTypeParamClause '=>' Type                              PolyFunction(ps, t)
 FunArgTypes       ::=  InfixType
@@ -151,7 +152,8 @@ FunParamClause    ::=  ‘(’ TypedFunParam {‘,’ TypedFunParam } ‘)’
 TypedFunParam     ::=  id ‘:’ Type
 MatchType         ::=  InfixType `match` ‘{’ TypeCaseClauses ‘}’
 InfixType         ::=  RefinedType {id [nl] RefinedType}                        InfixOp(t1, op, t2)
-RefinedType       ::=  WithType {[nl] Refinement}                               RefinedTypeTree(t, ds)
+RefinedType       ::=  WithType [Refinement]                                    RefinedTypeTree(t, ds)
+StructuralType    ::=  ConstrApp {‘with’ ConstrApp} ‘where’ TemplateBody
 WithType          ::=  AnnotType {‘with’ AnnotType}                             (deprecated)
 AnnotType         ::=  SimpleType {Annotation}                                  Annotated(t, annot)
 
@@ -175,7 +177,7 @@ FunArgType        ::=  Type
 ParamType         ::=  [‘=>’] ParamValueType
 ParamValueType    ::=  Type [‘*’]                                               PostfixOp(t, "*")
 TypeArgs          ::=  ‘[’ Types ‘]’                                            ts
-Refinement        ::=  ‘{’ [RefineDcl] {semi [RefineDcl]} ‘}’                   ds
+Refinement        ::=  [‘with’] [nl] ‘{’ [RefineDcl] {semi [RefineDcl]} ‘}’     ds
 TypeBounds        ::=  [‘>:’ Type] [‘<:’ Type]                                  TypeBoundsTree(lo, hi)
 TypeParamBounds   ::=  TypeBounds {‘:’ Type}                                    ContextBounds(typeBounds, tps)
 Types             ::=  Type {‘,’ Type}
@@ -193,7 +195,7 @@ FunParams         ::=  Bindings
 Expr1             ::=  [‘inline’] ‘if’ ‘(’ Expr ‘)’ {nl} Expr [[semi] ‘else’ Expr] If(Parens(cond), thenp, elsep?)
                     |  [‘inline’] ‘if’  Expr ‘then’ Expr [[semi] ‘else’ Expr]    If(cond, thenp, elsep?)
                     |  ‘while’ ‘(’ Expr ‘)’ {nl} Expr                           WhileDo(Parens(cond), body)
-                    |  ‘while’ Expr ‘do’ Expr                                   WhileDo(cond, body)
+                    |  ‘while’ Expr DoExpr                                      WhileDo(cond, body)
                     |  ‘try’ Expr Catches [‘finally’ Expr]                      Try(expr, catches, expr?)
                     |  ‘try’ Expr [‘finally’ Expr]                              Try(expr, Nil, expr?)
                     |  ‘throw’ Expr                                             Throw(expr)
@@ -220,9 +222,8 @@ SimpleExpr        ::=  SimpleRef
                     |  ‘$’ ‘{’ Block ‘}’
                     |  Quoted
                     |  quoteId                                                  -- only inside splices
-                    |  ‘new’ ConstrApp {‘with’ ConstrApp}                       New(constr | templ)
-                       [[colonEol] TemplateBody
-                    |  ‘new’ [colonEol] TemplateBody
+                    |  ‘new’ StructuralType                                     New(constr | templ)
+                    |  ‘new’ [‘where’] TemplateBody
                     |  ‘(’ ExprsInParens ‘)’                                    Parens(exprs)
                     |  SimpleExpr ‘.’ id                                        Select(expr, id)
                     |  SimpleExpr ‘.’ MatchClause
@@ -240,7 +241,11 @@ ParArgumentExprs  ::=  ‘(’ [‘using’] ExprsInParens ‘)’              
 ArgumentExprs     ::=  ParArgumentExprs
                     |  BlockExpr
 BlockExpr         ::=  ‘{’ (CaseClauses | Block) ‘}’
+                    |  DoExpr
+                    |  LetExpr
+DoExpr            ::=  ‘do’ ‘{’ Block ‘}’
 Block             ::=  {BlockStat semi} [BlockResult]                           Block(stats, expr?)
+LetExpr           ::=  ‘let’ {BlockStat semi} ‘in’ BlockResult                  Block(stats, expr)
 BlockStat         ::=  Import
                     |  {Annotation {nl}} [‘implicit’ | ‘lazy’] Def
                     |  {Annotation {nl}} {LocalModifier} TmplDef
@@ -250,7 +255,7 @@ BlockStat         ::=  Import
 
 ForExpr           ::=  ‘for’ (‘(’ Enumerators ‘)’ | ‘{’ Enumerators ‘}’)        ForYield(enums, expr)
                        {nl} [‘yield’] Expr
-                    |  ‘for’ Enumerators (‘do’ Expr | ‘yield’ Expr)             ForDo(enums, expr)
+                    |  ‘for’ Enumerators (DoExpr | ‘yield’ Expr)                ForDo(enums, expr)
 Enumerators       ::=  Generator {semi Enumerator | Guard}
 Enumerator        ::=  Generator
                     |  Guard
@@ -351,6 +356,7 @@ Export            ::=  ‘export’ ImportExpr {‘,’ ImportExpr}
 EndMarker         ::=  ‘end’ EndMarkerTag    -- when followed by EOL
 EndMarkerTag      ::=  id | ‘if’ | ‘while’ | ‘for’ | ‘match’ | ‘try’
                     |  ‘new’ | ‘this’ | ‘given’ | ‘extension’ | ‘val’
+                    |  ‘do’
 ```
 
 ### Declarations and Definitions
@@ -388,20 +394,20 @@ ClassDef          ::=  id ClassConstr [Template]                                
 ClassConstr       ::=  [ClsTypeParamClause] [ConstrMods] ClsParamClauses        with DefDef(_, <init>, Nil, vparamss, EmptyTree, EmptyTree) as first stat
 ConstrMods        ::=  {Annotation} [AccessModifier]
 ObjectDef         ::=  id [Template]                                            ModuleDef(mods, name, template)  // no constructor
-EnumDef           ::=  id ClassConstr InheritClauses [colonEol] EnumBody
-GivenDef          ::=  [GivenSig] (Type [‘=’ Expr] | StructuralInstance)
+EnumDef           ::=  id ClassConstr InheritClauses [colonEol | ‘where’] EnumBody
+GivenDef          ::=  [GivenSig] (Type [‘=’ Expr])
 GivenSig          ::=  [id] [DefTypeParamClause] {UsingParamClause} ‘:’         -- one of `id`, `DefParamClause`, `UsingParamClause` must be present
-StructuralInstance ::=  ConstrApp {‘with’ ConstrApp} ‘with’ TemplateBody
 Extension         ::=  ‘extension’ [DefTypeParamClause] ‘(’ DefParam ‘)’
                        {UsingParamClause}] ExtMethods
-ExtMethods        ::=  ExtMethod | [nl] ‘{’ ExtMethod {semi ExtMethod ‘}’
+ExtMethods        ::=  ExtMethod
+                    |  [‘where’] [nl] ‘{’ ExtMethod {semi ExtMethod ‘}’
 ExtMethod         ::=  {Annotation [nl]} {Modifier} ‘def’ DefDef
-Template          ::=  InheritClauses [colonEol] [TemplateBody]                 Template(constr, parents, self, stats)
+Template          ::=  InheritClauses [[colonEol | ‘where’] TemplateBody]       Template(constr, parents, self, stats)
 InheritClauses    ::=  [‘extends’ ConstrApps] [‘derives’ QualId {‘,’ QualId}]
 ConstrApps        ::=  ConstrApp ({‘,’ ConstrApp} | {‘with’ ConstrApp})
 ConstrApp         ::=  SimpleType1 {Annotation} {ParArgumentExprs}              Apply(tp, args)
 ConstrExpr        ::=  SelfInvocation
-                    |  ‘{’ SelfInvocation {semi BlockStat} ‘}’
+                    |  [‘do’] ‘{’ SelfInvocation {semi BlockStat} ‘}’
 SelfInvocation    ::=  ‘this’ ArgumentExprs {ArgumentExprs}
 
 TemplateBody      ::=  [nl] ‘{’ [SelfType] TemplateStat {semi TemplateStat} ‘}’
@@ -430,7 +436,7 @@ TopStat           ::=  Import
                     |  PackageObject
                     |  EndMarker
                     |
-Packaging         ::=  ‘package’ QualId [nl | colonEol] ‘{’ TopStatSeq ‘}’      Package(qid, stats)
+Packaging         ::=  ‘package’ QualId [nl | colonEol | (‘where’ [nl])] ‘{’ TopStatSeq ‘}’      Package(qid, stats)
 PackageObject     ::=  ‘package’ ‘object’ ObjectDef                             object with package in mods.
 
 CompilationUnit   ::=  {‘package’ QualId semi} TopStatSeq                       Package(qid, stats)

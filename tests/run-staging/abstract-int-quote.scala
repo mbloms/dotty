@@ -1,7 +1,7 @@
 import scala.quoted._
 import scala.quoted.staging._
 
-object Test:
+object Test where
 
   given Toolbox = Toolbox.make(getClass.getClassLoader)
 

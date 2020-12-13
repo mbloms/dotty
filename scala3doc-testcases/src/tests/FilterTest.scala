@@ -1,6 +1,6 @@
 package tests
 
-trait FilterTestBaseTrait:
+trait FilterTestBaseTrait where
    /** doc */
   protected def protectetDefInheriteTrait(a: Int): String = ???
   /** doc */
@@ -20,7 +20,7 @@ trait FilterTestBaseTrait:
   /** doc */
   val publicValInheritedTrait = 567
 
-class FilterTestBase:
+class FilterTestBase where
   /** doc */
   sealed abstract class BInherited
   /** doc */
@@ -69,7 +69,7 @@ class FilterTestBase:
   /** doc */
   given namedMap: Map[String, Double] = Map.empty
 
-class FilterTest extends FilterTestBase with FilterTestBaseTrait:
+class FilterTest extends FilterTestBase with FilterTestBaseTrait where
   /** doc */
   sealed abstract class B
   /** doc */

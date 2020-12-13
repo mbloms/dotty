@@ -1,6 +1,6 @@
-trait M:
+trait M where
   type X
-  object X:
+  object X where
     def foo(): X = ???
 
 inline def m(using m: M): m.type = m

@@ -48,7 +48,7 @@ private class QuoteCompiler extends Compiler:
   def outputClassName: TypeName = "Generated$Code$From$Quoted".toTypeName
 
   /** Frontend that receives a scala.quoted.Expr or scala.quoted.Type as input */
-  class QuotedFrontend extends Phase:
+  class QuotedFrontend extends Phase where
     import tpd._
 
     def phaseName: String = "quotedFrontend"
@@ -100,7 +100,7 @@ private class QuoteCompiler extends Compiler:
 
   end QuotedFrontend
 
-  class ExprRun(comp: QuoteCompiler, ictx: Context) extends Run(comp, ictx):
+  class ExprRun(comp: QuoteCompiler, ictx: Context) extends Run(comp, ictx) where
     /** Unpickle and optionally compile the expression.
      *  Returns either `Left` with name of the classfile generated or `Right` with the value contained in the expression.
      */

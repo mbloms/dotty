@@ -10,7 +10,7 @@ import dotc.core.Contexts.Context
   *
   * See [[this.process]].
   */
-object Main extends Driver:
+object Main extends Driver where
 
   /** Actual entrypoint from SBT.
     *

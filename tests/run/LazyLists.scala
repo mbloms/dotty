@@ -1,4 +1,4 @@
-package xcollections:
+package xcollections where
   import annotation.unchecked.uncheckedVariance
 
   abstract class LazyList[+T]:
@@ -40,12 +40,12 @@ package xcollections:
       case xs: LazyList[T] @unchecked => xs
       case _ => LazyList.fromIterator(xs.iterator)
 
-  object LazyList:
+  object LazyList where
 
     val empty: LazyList[Nothing] = new:
       protected def force(): LazyList[Nothing] = this
 
-    object #:: :
+    object #::  where
       def unapply[T](xs: LazyList[T]): Option[(T, LazyList[T])] =
         if xs.isEmpty then None
         else Some((xs.head, xs.tail))

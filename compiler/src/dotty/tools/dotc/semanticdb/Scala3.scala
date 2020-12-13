@@ -15,7 +15,7 @@ import java.lang.Character.{isJavaIdentifierPart, isJavaIdentifierStart}
 import scala.annotation.internal.sharable
 import scala.annotation.switch
 
-object Scala3:
+object Scala3 where
   import Symbols._
   import core.NameOps._
 
@@ -25,7 +25,7 @@ object Scala3:
 
   private val WILDCARDTypeName = nme.WILDCARD.toTypeName
 
-  enum SymbolKind derives CanEqual:
+  enum SymbolKind derives CanEqual where
     kind =>
 
     case Val, Var, Setter, Abstract
@@ -38,13 +38,13 @@ object Scala3:
 
   end SymbolKind
 
-  object SymbolKind:
+  object SymbolKind where
     val ValSet   = Set(Val)
     val VarSet   = Set(Var)
     val emptySet = Set.empty[SymbolKind]
   end SymbolKind
 
-  object Symbols:
+  object Symbols where
 
     val RootPackage: String = "_root_/"
     val EmptyPackage: String = "_empty_/"
@@ -126,7 +126,7 @@ object Scala3:
 
   end SymbolOps
 
-  object LocalSymbol:
+  object LocalSymbol where
 
     def unapply(symbolInfo: SymbolInformation): Option[Int] = symbolInfo.symbol match
       case locals(ints) =>

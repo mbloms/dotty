@@ -1,6 +1,6 @@
 case class C()
 
-object O:
+object O where
   opaque type T <: C = C
   val x: T = C()
   (??? : Any) match

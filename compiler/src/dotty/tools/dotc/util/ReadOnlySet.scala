@@ -19,6 +19,6 @@ abstract class ReadOnlySet[T]:
 
   def isEmpty = size == 0
 
-object ReadOnlySet:
+object ReadOnlySet where
   def empty[T]: ReadOnlySet[T] = HashSet[T](4)
 

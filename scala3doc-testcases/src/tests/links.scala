@@ -1,6 +1,6 @@
 package tests.links
 
-object AnObject:
+object AnObject where
   def method(a: Int): Int
     = 123 + a
   val field =
@@ -11,6 +11,6 @@ object AnObject:
  * [[tests.links.AnObject]]
 
  */
-class LinksTest:
+class LinksTest where
   def verifyIfLinksTestIsGenerated(b: Int): Int
     = 123

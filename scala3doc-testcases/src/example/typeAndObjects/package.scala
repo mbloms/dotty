@@ -1,7 +1,7 @@
 package example
 
 // Ala fails Ola does not
-package object typeAndObjects:
+package object typeAndObjects where
   type Ala
 
 package typeAndObjects {

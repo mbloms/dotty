@@ -7,7 +7,7 @@ import dotty.dokka.model.api.Kind
 import HTML._
 import dotty.dokka.model.api._
 
-object DotDiagramBuilder:
+object DotDiagramBuilder where
   def build(diagram: HierarchyGraph, renderer: SignatureRenderer)(using DocContext): String =
     def getStyle(vertex: LinkToType) = vertex.kind match
       case _ : Kind.Class => "fill: #45AD7D;"

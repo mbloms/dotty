@@ -18,7 +18,7 @@ import dotty.dokka.model.api._
 
 import dotty.dokka._
 
-object FilterAttributes:
+object FilterAttributes where
   def attributesFor(m: Member): Map[String, String] =
     val base = visibity(m) ++ visibity(m) ++ origin(m) ++ keywords(m) ++ inheritedFrom(m)
     base.filter(_._2.nonEmpty)

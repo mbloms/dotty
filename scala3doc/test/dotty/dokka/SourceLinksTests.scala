@@ -4,7 +4,7 @@ import java.nio.file._
 import org.junit.Assert._
 import org.junit.Test
 
-class SourceLinkTest:
+class SourceLinkTest where
 
   @Test
   def testBasicFailures() =
@@ -55,7 +55,7 @@ class SourceLinkTest:
 
     }
 
-class SourceLinksTest:
+class SourceLinksTest where
   // TODO (https://github.com/lampepfl/scala3doc/issues/240): configure source root
   val projectRoot = Paths.get("").toAbsolutePath()
 

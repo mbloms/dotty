@@ -6,7 +6,7 @@ import config.Config
 import Decorators._
 import util.{HashSet, Stats}
 
-class Uniques extends HashSet[Type](Config.initialUniquesCapacity):
+class Uniques extends HashSet[Type](Config.initialUniquesCapacity) where
   override def hash(x: Type): Int = x.hash
   override def isEqual(x: Type, y: Type) = x.eql(y)
 
@@ -15,7 +15,7 @@ class Uniques extends HashSet[Type](Config.initialUniquesCapacity):
  *  All sets offer a `enterIfNew` method which checks whether a type
  *  with the given parts exists already and creates a new one if not.
  */
-object Uniques:
+object Uniques where
 
   private inline def recordCaching(tp: Type): Unit = recordCaching(tp.hash, tp.getClass)
   private inline def recordCaching(h: Int, clazz: Class[?]): Unit =

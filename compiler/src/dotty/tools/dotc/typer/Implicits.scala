@@ -40,7 +40,7 @@ import scala.annotation.internal.sharable
 import scala.annotation.threadUnsafe
 
 /** Implicit resolution */
-object Implicits:
+object Implicits where
   import tpd._
 
   /** An implicit definition `implicitRef` that is visible under a different name, `alias`.
@@ -513,7 +513,7 @@ object Implicits:
       em"${err.refStr(ref)} produces a diverging implicit search when trying to $qualify"
   }
 
-  class FailedExtension(extApp: Tree, val expectedType: Type) extends SearchFailureType:
+  class FailedExtension(extApp: Tree, val expectedType: Type) extends SearchFailureType where
     def argument = EmptyTree
     def explanation(using Context) = em"$extApp does not $qualify"
 end Implicits
@@ -521,7 +521,7 @@ end Implicits
 import Implicits._
 
 /** Info relating to implicits that is kept for one run */
-trait ImplicitRunInfo:
+trait ImplicitRunInfo where
   self: Run =>
 
   private val implicitScopeCache = util.EqHashMap[Type, OfTypeImplicits]()
@@ -541,7 +541,7 @@ trait ImplicitRunInfo:
 
   private def computeIScope(rootTp: Type): OfTypeImplicits =
 
-    object collectParts extends TypeTraverser:
+    object collectParts extends TypeTraverser where
 
       private var provisional: Boolean = _
       private var parts: mutable.LinkedHashSet[Type] = _
@@ -744,7 +744,7 @@ trait ImplicitRunInfo:
 end ImplicitRunInfo
 
 /** The implicit resolution part of type checking */
-trait Implicits:
+trait Implicits where
   self: Typer =>
 
   import tpd._
@@ -917,7 +917,7 @@ trait Implicits:
       implicits.println(i"CanEqual witness found for $ltp / $rtp: $res: ${res.tpe}")
     }
 
-  object hasSkolem extends TreeAccumulator[Boolean]:
+  object hasSkolem extends TreeAccumulator[Boolean] where
     def apply(x: Boolean, tree: Tree)(using Context): Boolean =
       x || {
         tree match
@@ -1055,7 +1055,7 @@ trait Implicits:
     }
 
   /** An implicit search; parameters as in `inferImplicit` */
-  class ImplicitSearch(protected val pt: Type, protected val argument: Tree, span: Span)(using Context):
+  class ImplicitSearch(protected val pt: Type, protected val argument: Tree, span: Span)(using Context) where
     assert(argument.isEmpty || argument.tpe.isValueType || argument.tpe.isInstanceOf[ExprType],
         em"found: $argument: ${argument.tpe}, expected: $pt")
 
@@ -1117,7 +1117,7 @@ trait Implicits:
           if diff == 0 then
             // Fall back: if both results are extension method applications,
             // compare the extension methods instead of their wrappers.
-            object extMethodApply:
+            object extMethodApply where
               def unapply(t: Tree): Option[Type] = t match
                 case t: Applications.ExtMethodApply => Some(methPart(stripApply(t.app)).tpe)
                 case _ => None
@@ -1677,7 +1677,7 @@ sealed class TermRefSet(using Context):
 
   override def toString = showAsList.toString
 
-object TermRefSet:
+object TermRefSet where
 
   @sharable val empty = new TermRefSet(using NoContext):
     override def += (ref: TermRef): Unit = throw UnsupportedOperationException("+=")

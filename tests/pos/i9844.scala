@@ -1,4 +1,4 @@
-object test1:
+object test1 where
   trait Foo[A]
 
   trait Baz[A]  {
@@ -8,13 +8,13 @@ object test1:
     }
   }
 
-object test2:
+object test2 where
 
-  trait Foo:
+  trait Foo where
     private var f = "abc"
 
   trait Baz  {
-    trait Bam:
+    trait Bam where
       val f = 0
     trait Bar extends Bam {
       this: Foo =>
@@ -23,7 +23,7 @@ object test2:
     }
   }
 
-object test3:
+object test3 where
   object DetSkipOctree {
     sealed trait Leaf  [PL]
     sealed trait Branch[PL]

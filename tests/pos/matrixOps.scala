@@ -1,4 +1,4 @@
-object Test:
+object Test where
 
   type Matrix = Array[Array[Double]]
   type Vector = Array[Double]

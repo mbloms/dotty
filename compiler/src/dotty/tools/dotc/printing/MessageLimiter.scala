@@ -29,17 +29,17 @@ abstract class MessageLimiter:
 
 object MessageLimiter extends Property.Key[MessageLimiter]
 
-class DefaultMessageLimiter extends MessageLimiter:
+class DefaultMessageLimiter extends MessageLimiter where
   override def recursionLimitExceeded()(using Context): Unit =
     if ctx.debug then
       report.warning("Exceeded recursion depth attempting to print.")
       Thread.dumpStack()
 
-class SummarizeMessageLimiter(depth: Int) extends MessageLimiter:
+class SummarizeMessageLimiter(depth: Int) extends MessageLimiter where
   override val recurseLimit = recurseCount + depth
   override def recursionLimitExceeded()(using Context): Unit = ()
 
-class ErrorMessageLimiter extends MessageLimiter:
+class ErrorMessageLimiter extends MessageLimiter where
   private val initialRecurseLimit = 50
   private val sizeLimit = 10000
 

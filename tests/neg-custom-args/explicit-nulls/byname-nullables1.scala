@@ -1,7 +1,7 @@
 def f(op: => Boolean): Unit = ()
 def f(op: Int): Unit = ()
 
-class C:
+class C where
   var fld: String | Null = null
 
 def test() =

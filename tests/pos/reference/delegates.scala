@@ -1,30 +1,30 @@
-class Common:
+class Common where
 
-  trait Ord[T]:
+  trait Ord[T] where
     extension (x: T) def compareTo(y: T): Int
     extension (x: T) def < (y: T) = x.compareTo(y) < 0
     extension (x: T) def > (y: T) = x.compareTo(y) > 0
 
-  trait Convertible[From, To]:
+  trait Convertible[From, To] where
     extension (x: From) def convert: To
 
-  trait SemiGroup[T]:
+  trait SemiGroup[T] where
     extension (x: T) def combine(y: T): T
 
-  trait Monoid[T] extends SemiGroup[T]:
+  trait Monoid[T] extends SemiGroup[T] where
     def unit: T
 
-  trait Functor[F[_]]:
+  trait Functor[F[_]] where
     extension [A, B](x: F[A]) def map (f: A => B): F[B]
 
-  trait Monad[F[_]] extends Functor[F]:
+  trait Monad[F[_]] extends Functor[F] where
     extension [A, B](x: F[A]) def flatMap (f: A => F[B]): F[B]
     extension [A, B](x: F[A]) def map (f: A => B) = x.flatMap(f `andThen` pure)
 
     def pure[A](x: A): F[A]
 end Common
 
-object Instances extends Common:
+object Instances extends Common where
 
   given intOrd: Ord[Int] with
     extension (x: Int) def compareTo(y: Int) =
@@ -85,20 +85,20 @@ object Instances extends Common:
   class B
   val ab: (x: A, y: B) ?=> Int = (a: A, b: B) ?=> 22
 
-  trait TastyAPI:
+  trait TastyAPI where
     type Symbol
-    trait SymDeco:
+    trait SymDeco where
       extension (sym: Symbol) def name: String
     given symDeco: SymDeco
 
-  object TastyImpl extends TastyAPI:
+  object TastyImpl extends TastyAPI where
     type Symbol = String
     given symDeco: SymDeco with
       extension (sym: Symbol) def name = sym
 
   class D[T]
 
-  class C(using ctx: Context):
+  class C(using ctx: Context) where
     def f() =
       locally {
         given Context = this.ctx
@@ -121,14 +121,14 @@ object Instances extends Common:
 
   class Token(str: String)
 
-  object Token:
+  object Token where
     given StringToToken: Conversion[String, Token] with
       def apply(str: String): Token = new Token(str)
 
   val x: Token = "if"
 end Instances
 
-object PostConditions:
+object PostConditions where
   opaque type WrappedResult[T] = T
 
   def result[T](using x: WrappedResult[T]): T = x
@@ -139,7 +139,7 @@ object PostConditions:
       x
 end PostConditions
 
-object AnonymousInstances extends Common:
+object AnonymousInstances extends Common where
   given Ord[Int] with
     extension (x: Int) def compareTo(y: Int) =
       if (x < y) -1 else if (x > y) +1 else 0
@@ -173,12 +173,12 @@ object AnonymousInstances extends Common:
       xs.foldLeft(summon[Monoid[T]].unit)(_.combine(_))
 end AnonymousInstances
 
-object Implicits extends Common:
+object Implicits extends Common where
   implicit object IntOrd extends Ord[Int]:
     extension (x: Int) def compareTo(y: Int) =
       if (x < y) -1 else if (x > y) +1 else 0
 
-  class ListOrd[T: Ord] extends Ord[List[T]]:
+  class ListOrd[T: Ord] extends Ord[List[T]] where
     extension (xs: List[T]) def compareTo(ys: List[T]): Int = (xs, ys).match
       case (Nil, Nil) => 0
       case (Nil, _) => -1
@@ -205,25 +205,25 @@ object Implicits extends Common:
   def minimum[T](xs: List[T])(implicit cmp: Ord[T]) =
     maximum(xs)(descending)
 
-object Test extends App:
+object Test extends App where
   Instances.test()
   import PostConditions.{result, ensuring}
   val s = List(1, 2, 3).sum
   s.ensuring(result == 6)
 end Test
 
-object Completions:
+object Completions where
 
   class Future[T]
   class HttpResponse
   class StatusCode
 
   // The argument "magnet" type
-  enum CompletionArg:
+  enum CompletionArg where
     case Error(s: String)
     case Response(f: Future[HttpResponse])
     case Status(code: Future[StatusCode])
-  object CompletionArg:
+  object CompletionArg where
 
     // conversions defining the possible arguments to pass to `complete`
     // these always come with CompletionArg

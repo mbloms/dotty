@@ -1,4 +1,4 @@
-trait SAMTrait:
+trait SAMTrait where
   def first(): String
   def equals(obj: Int): Boolean
 

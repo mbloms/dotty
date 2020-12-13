@@ -1,7 +1,7 @@
-trait Resolver:
+trait Resolver where
   def resolve(label: String): Any
 
-class ResolvingSelectable extends Selectable:
+class ResolvingSelectable extends Selectable where
   def selectDynamic(label: String)(using r: Resolver): Any =
     r.resolve(label)
   def applyDynamic(label: String)(args: Any*)(using r: Resolver): Any =

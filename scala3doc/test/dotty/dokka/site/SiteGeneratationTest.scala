@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document
 import java.nio.charset.Charset
 import dotty.dokka.test.BuildInfo
 
-class SiteGeneratationTest:
+class SiteGeneratationTest where
   val projectName = "Test Project Name"
   val projectVersion = "1.0.1-M1"
 
@@ -31,7 +31,7 @@ class SiteGeneratationTest:
 
   val testDocPath = Paths.get(BuildInfo.testDocumentationRoot)
 
-  class DocumentContext(d: Document, path: Path):
+  class DocumentContext(d: Document, path: Path) where
     import collection.JavaConverters._
 
     def niceMsg(msg: String) = s"$msg in $path (body):\n ${d.html()}:\n"

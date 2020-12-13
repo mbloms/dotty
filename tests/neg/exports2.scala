@@ -1,9 +1,9 @@
-object A:
+object A where
   def f: String = ""
 
-trait B:
+trait B where
   def f: String = "abc"
 
-object C extends B:
+object C extends B where
   export A._            // error
 

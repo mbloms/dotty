@@ -20,7 +20,7 @@ import java.nio.file.Path
 import scala.util.matching._
 import dotty.dokka.model.api._
 
-class StaticSiteLocationProviderFactory(using ctx: DokkaContext) extends LocationProviderFactory:
+class StaticSiteLocationProviderFactory(using ctx: DokkaContext) extends LocationProviderFactory where
   override def getLocationProvider(pageNode: RootPageNode): LocationProvider =
     try new StaticSiteLocationProvider(pageNode)
     catch

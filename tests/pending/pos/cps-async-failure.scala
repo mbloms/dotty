@@ -1,7 +1,7 @@
 
 import scala.quoted._
 
-trait App[F[_],CT]:
+trait App[F[_],CT] where
   this: Base[F,CT] =>
 
   import quotes.reflect._
@@ -39,10 +39,10 @@ trait Base[F[_]:Type,CT:Type]  // Both :Type context bounds are necessary for fa
 extends Cps with Root[F, CT] with App[F, CT]:
   implicit val qctx: Quotes
 
-trait Root[F[_], CT]:
+trait Root[F[_], CT] where
   this: Base[F, CT] =>
   def runRoot(): CpsTree = ???
 
-trait Cps:
+trait Cps where
   sealed abstract class CpsTree
 

@@ -1,4 +1,4 @@
-trait Person:
+trait Person where
   def name: String
 
 case class PersonA(name: String) extends Person

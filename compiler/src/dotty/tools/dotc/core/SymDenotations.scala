@@ -2505,7 +2505,7 @@ object SymDenotations {
     override def toString: String = getClass.toString
   }
 
-  object LazyType:
+  object LazyType where
     private val NoSymbolFn = (using _: Context) => NoSymbol
 
   /** A subtrait of LazyTypes where completerTypeParams yields a List[TypeSymbol], which

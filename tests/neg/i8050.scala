@@ -1,4 +1,4 @@
-object stuff:
+object stuff where
   def exec(dir: Int) = ???
 
 extension (a: Int)

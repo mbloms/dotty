@@ -13,7 +13,7 @@ import dotty.dokka.model.api.Kind
 import dotty.dokka.model.api.ImplicitConversion
 import dotty.dokka.model.api.{Signature => DSignature, Link => DLink}
 
-trait ClassLikeSupport:
+trait ClassLikeSupport where
   self: TastyParser =>
   import qctx.reflect._
 

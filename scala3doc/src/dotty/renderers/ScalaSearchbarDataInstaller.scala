@@ -18,7 +18,7 @@ import org.jetbrains.dokka.model._
 import scala.collection.concurrent.TrieMap
 import dotty.dokka.site.StaticPageNode
 
-class ScalaSearchbarDataInstaller(val ctx: DokkaContext) extends SearchbarDataInstaller:
+class ScalaSearchbarDataInstaller(val ctx: DokkaContext) extends SearchbarDataInstaller where
 
   case class PageEntry(val name: String, val signature: String, val link: String, val pkg: String)
 

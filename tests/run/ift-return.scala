@@ -1,7 +1,7 @@
-trait A:
+trait A where
   val x: Int
 
-trait Ctx:
+trait Ctx where
   type T
   val x: T
   val y: T

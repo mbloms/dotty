@@ -1,6 +1,6 @@
 import compiletime._
 
-class C:
+class C where
   type N <: Int
 
 def test: Unit =

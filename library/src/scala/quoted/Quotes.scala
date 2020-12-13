@@ -287,7 +287,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given PackageClauseMethods: PackageClauseMethods
 
     /** Extension methods of `PackageClause` */
-    trait PackageClauseMethods:
+    trait PackageClauseMethods where
       extension (self: PackageClause)
         def pid: Ref
         def stats: List[Tree]
@@ -314,7 +314,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ImportMethods: ImportMethods
 
     /** Extension methods of `Import` */
-    trait ImportMethods:
+    trait ImportMethods where
       extension (self: Import)
         def expr: Term
         def selectors: List[Selector]
@@ -341,7 +341,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ExportMethods: ExportMethods
 
     /** Extension methods of `Export` */
-    trait ExportMethods:
+    trait ExportMethods where
       extension (self: Export)
         def expr: Term
         def selectors: List[Selector]
@@ -372,7 +372,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given DefinitionMethods: DefinitionMethods
 
     /** Extension methods of `Definition` */
-    trait DefinitionMethods:
+    trait DefinitionMethods where
       extension (self: Definition)
         def name: String
       end extension
@@ -400,7 +400,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ClassDefMethods: ClassDefMethods
 
     /** Extension methods of `ClassDef` */
-    trait ClassDefMethods:
+    trait ClassDefMethods where
       extension (self: ClassDef)
         def constructor: DefDef
         def parents: List[Tree /* Term | TypeTree */]
@@ -432,7 +432,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given DefDefMethods: DefDefMethods
 
     /** Extension methods of `DefDef` */
-    trait DefDefMethods:
+    trait DefDefMethods where
       extension (self: DefDef)
         def typeParams: List[TypeDef]
         def paramss: List[List[ValDef]]
@@ -473,7 +473,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ValDefMethods: ValDefMethods
 
     /** Extension methods of `ValDef` */
-    trait ValDefMethods:
+    trait ValDefMethods where
       extension (self: ValDef)
         def tpt: TypeTree
         def rhs: Option[Term]
@@ -502,7 +502,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeDefMethods: TypeDefMethods
 
     /** Extension methods of `TypeDef` */
-    trait TypeDefMethods:
+    trait TypeDefMethods where
       extension (self: TypeDef)
         def rhs: Tree /*TypeTree | TypeBoundsTree*/
       end extension
@@ -647,7 +647,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given IdentMethods: IdentMethods
 
     /** Extension methods of `Ident` */
-    trait IdentMethods:
+    trait IdentMethods where
       extension (self: Ident)
         def name: String
       end extension
@@ -691,7 +691,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given SelectMethods: SelectMethods
 
     /** Extension methods of `Select` */
-    trait SelectMethods:
+    trait SelectMethods where
       extension (self: Select)
         def qualifier: Term
         def name: String
@@ -724,7 +724,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given LiteralMethods: LiteralMethods
 
     /** Extension methods of `Literal` */
-    trait LiteralMethods:
+    trait LiteralMethods where
       extension (self: Literal)
         def constant: Constant
       end extension
@@ -755,7 +755,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ThisMethods: ThisMethods
 
     /** Extension methods of `This` */
-    trait ThisMethods:
+    trait ThisMethods where
       extension (self: This)
         def id: Option[String]
       end extension
@@ -786,7 +786,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given NewMethods: NewMethods
 
     /** Extension methods of `New` */
-    trait NewMethods:
+    trait NewMethods where
       extension (self: New)
         def tpt: TypeTree
       end extension
@@ -817,7 +817,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given NamedArgMethods: NamedArgMethods
 
     /** Extension methods of `NamedArg` */
-    trait NamedArgMethods:
+    trait NamedArgMethods where
       extension (self: NamedArg)
         def name: String
         def value: Term
@@ -849,7 +849,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ApplyMethods: ApplyMethods
 
     /** Extension methods of `Apply` */
-    trait ApplyMethods:
+    trait ApplyMethods where
       extension (self: Apply)
         def fun: Term
         def args: List[Term]
@@ -881,7 +881,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeApplyMethods: TypeApplyMethods
 
     /** Extension methods of `TypeApply` */
-    trait TypeApplyMethods:
+    trait TypeApplyMethods where
       extension (self: TypeApply)
         def fun: Term
         def args: List[TypeTree]
@@ -913,7 +913,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given SuperMethods: SuperMethods
 
     /** Extension methods of `Super` */
-    trait SuperMethods:
+    trait SuperMethods where
       extension (self: Super)
         def qualifier: Term
         def id: Option[String]
@@ -946,7 +946,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypedMethods: TypedMethods
 
     /** Extension methods of `Typed` */
-    trait TypedMethods:
+    trait TypedMethods where
       extension (self: Typed)
         def expr: Term
         def tpt: TypeTree
@@ -978,7 +978,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given AssignMethods: AssignMethods
 
     /** Extension methods of `Assign` */
-    trait AssignMethods:
+    trait AssignMethods where
       extension (self: Assign)
         def lhs: Term
         def rhs: Term
@@ -1010,7 +1010,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given BlockMethods: BlockMethods
 
     /** Extension methods of `Block` */
-    trait BlockMethods:
+    trait BlockMethods where
       extension (self: Block)
         def statements: List[Statement]
         def expr: Term
@@ -1048,7 +1048,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ClosureMethods: ClosureMethods
 
     /** Extension methods of `Closure` */
-    trait ClosureMethods:
+    trait ClosureMethods where
       extension (self: Closure)
         def meth: Term
         def tpeOpt: Option[TypeRepr]
@@ -1116,7 +1116,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given IfMethods: IfMethods
 
     /** Extension methods of `If` */
-    trait IfMethods:
+    trait IfMethods where
       extension (self: If)
         def cond: Term
         def thenp: Term
@@ -1150,7 +1150,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given MatchMethods: MatchMethods
 
     /** Extension methods of `Match` */
-    trait MatchMethods:
+    trait MatchMethods where
       extension (self: Match)
         def scrutinee: Term
         def cases: List[CaseDef]
@@ -1183,7 +1183,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given SummonFromMethods: SummonFromMethods
 
     /** Extension methods of `SummonFrom` */
-    trait SummonFromMethods:
+    trait SummonFromMethods where
       extension (self: SummonFrom)
         def cases: List[CaseDef]
       end extension
@@ -1214,7 +1214,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TryMethods: TryMethods
 
     /** Extension methods of `Try` */
-    trait TryMethods:
+    trait TryMethods where
       extension (self: Try)
         def body: Term
         def cases: List[CaseDef]
@@ -1247,7 +1247,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ReturnMethods: ReturnMethods
 
     /** Extension methods of `Return` */
-    trait ReturnMethods:
+    trait ReturnMethods where
       extension (self: Return)
         def expr: Term
         def from: Symbol
@@ -1274,7 +1274,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given RepeatedMethods: RepeatedMethods
 
     /** Extension methods of `Repeated` */
-    trait RepeatedMethods:
+    trait RepeatedMethods where
       extension (self: Repeated)
         def elems: List[Term]
         def elemtpt: TypeTree
@@ -1301,7 +1301,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given InlinedMethods: InlinedMethods
 
     /** Extension methods of `Inlined` */
-    trait InlinedMethods:
+    trait InlinedMethods where
       extension (self: Inlined)
         def call: Option[Tree /* Term | TypeTree */]
         def bindings: List[Definition]
@@ -1329,7 +1329,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given SelectOuterMethods: SelectOuterMethods
 
     /** Extension methods of `SelectOuter` */
-    trait SelectOuterMethods:
+    trait SelectOuterMethods where
       extension (self: SelectOuter)
         def qualifier: Term
         def name: String
@@ -1362,7 +1362,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given WhileMethods: WhileMethods
 
     /** Extension methods of `While` */
-    trait WhileMethods:
+    trait WhileMethods where
       extension (self: While)
         def cond: Term
         def body: Term
@@ -1390,7 +1390,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeTreeMethods: TypeTreeMethods
 
     /** Extension methods of `TypeTree` */
-    trait TypeTreeMethods:
+    trait TypeTreeMethods where
       extension (self: TypeTree)
         /** TypeRepr of this type tree */
         def tpe: TypeRepr
@@ -1433,7 +1433,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeIdentMethods: TypeIdentMethods
 
     /** Extension methods of `TypeIdent` */
-    trait TypeIdentMethods:
+    trait TypeIdentMethods where
       extension (self: TypeIdent)
         def name: String
       end extension
@@ -1459,7 +1459,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeSelectMethods: TypeSelectMethods
 
     /** Extension methods of `TypeSelect` */
-    trait TypeSelectMethods:
+    trait TypeSelectMethods where
       extension (self: TypeSelect)
         def qualifier: Term
         def name: String
@@ -1486,7 +1486,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeProjectionMethods: TypeProjectionMethods
 
     /** Extension methods of `TypeProjection` */
-    trait TypeProjectionMethods:
+    trait TypeProjectionMethods where
       extension (self: TypeProjection)
         def qualifier: TypeTree
         def name: String
@@ -1513,7 +1513,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given SingletonMethods: SingletonMethods
 
     /** Extension methods of `Singleton` */
-    trait SingletonMethods:
+    trait SingletonMethods where
       extension (self: Singleton)
         def ref: Term
       end extension
@@ -1539,7 +1539,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given RefinedMethods: RefinedMethods
 
     /** Extension methods of `Refined` */
-    trait RefinedMethods:
+    trait RefinedMethods where
       extension (self: Refined)
         def tpt: TypeTree
         def refinements: List[Definition]
@@ -1566,7 +1566,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given AppliedMethods: AppliedMethods
 
     /** Extension methods of `Applied` */
-    trait AppliedMethods:
+    trait AppliedMethods where
       extension (self: Applied)
         def tpt: TypeTree
         def args: List[Tree /*TypeTree | TypeBoundsTree*/]
@@ -1593,7 +1593,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given AnnotatedMethods: AnnotatedMethods
 
     /** Extension methods of `Annotated` */
-    trait AnnotatedMethods:
+    trait AnnotatedMethods where
       extension (self: Annotated)
         def arg: TypeTree
         def annotation: Term
@@ -1620,7 +1620,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given MatchTypeTreeMethods: MatchTypeTreeMethods
 
     /** Extension methods of `MatchTypeTree` */
-    trait MatchTypeTreeMethods:
+    trait MatchTypeTreeMethods where
       extension (self: MatchTypeTree)
         def bound: Option[TypeTree]
         def selector: TypeTree
@@ -1648,7 +1648,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ByNameMethods: ByNameMethods
 
     /** Extension methods of `ByName` */
-    trait ByNameMethods:
+    trait ByNameMethods where
       extension (self: ByName)
         def result: TypeTree
       end extension
@@ -1674,7 +1674,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given LambdaTypeTreeMethods: LambdaTypeTreeMethods
 
     /** Extension methods of `LambdaTypeTree` */
-    trait LambdaTypeTreeMethods:
+    trait LambdaTypeTreeMethods where
       extension (self: LambdaTypeTree)
         def tparams: List[TypeDef]
         def body: Tree /*TypeTree | TypeBoundsTree*/
@@ -1701,7 +1701,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeBindMethods: TypeBindMethods
 
     /** Extension methods of `TypeBind` */
-    trait TypeBindMethods:
+    trait TypeBindMethods where
       extension (self: TypeBind)
         def name: String
         def body: Tree /*TypeTree | TypeBoundsTree*/
@@ -1728,7 +1728,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeBlockMethods: TypeBlockMethods
 
     /** Extension methods of `TypeBlock` */
-    trait TypeBlockMethods:
+    trait TypeBlockMethods where
       extension (self: TypeBlock)
         def aliases: List[TypeDef]
         def tpt: TypeTree
@@ -1757,7 +1757,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeBoundsTreeMethods: TypeBoundsTreeMethods
 
     /** Extension methods of `TypeBoundsTree` */
-    trait TypeBoundsTreeMethods:
+    trait TypeBoundsTreeMethods where
       extension (self: TypeBoundsTree)
         def tpe: TypeBounds
         def low: TypeTree
@@ -1788,7 +1788,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given WildcardTypeTreeMethods: WildcardTypeTreeMethods
 
     /** Extension methods of `WildcardTypeTree` */
-    trait WildcardTypeTreeMethods:
+    trait WildcardTypeTreeMethods where
       extension (self: WildcardTypeTree)
         def tpe: TypeRepr
       end extension
@@ -1816,7 +1816,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given CaseDefMethods: CaseDefMethods
 
     /** Extension methods of `CaseDef` */
-    trait CaseDefMethods:
+    trait CaseDefMethods where
       extension (self: CaseDef)
         def pattern: Tree
         def guard: Option[Term]
@@ -1844,7 +1844,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeCaseDefMethods: TypeCaseDefMethods
 
     /** Extension methods of `TypeCaseDef` */
-    trait TypeCaseDefMethods:
+    trait TypeCaseDefMethods where
       extension (self: TypeCaseDef)
         def pattern: TypeTree
         def rhs: TypeTree
@@ -1873,7 +1873,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given BindMethods: BindMethods
 
     /** Extension methods of `Bind` */
-    trait BindMethods:
+    trait BindMethods where
       extension (self: Bind)
         def name: String
         def pattern: Tree
@@ -1900,7 +1900,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given UnapplyMethods: UnapplyMethods
 
     /** Extension methods of `Unapply` */
-    trait UnapplyMethods:
+    trait UnapplyMethods where
       extension (self: Unapply)
         def fun: Term
         def implicits: List[Term]
@@ -1928,7 +1928,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given AlternativesMethods: AlternativesMethods
 
     /** Extension methods of `Alternatives` */
-    trait AlternativesMethods:
+    trait AlternativesMethods where
       extension (self: Alternatives)
         def patterns: List[Tree]
       end extension
@@ -1970,7 +1970,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given SimpleSelectorMethods: SimpleSelectorMethods
 
     /** Extension methods of `SimpleSelector` */
-    trait SimpleSelectorMethods:
+    trait SimpleSelectorMethods where
       extension (self: SimpleSelector)
         def name: String
         def namePos: Position
@@ -1995,7 +1995,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given RenameSelectorMethods: RenameSelectorMethods
 
     /** Extension methods of `RenameSelector` */
-    trait RenameSelectorMethods:
+    trait RenameSelectorMethods where
       extension (self: RenameSelector)
         def fromName: String
         def fromPos: Position
@@ -2022,7 +2022,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given OmitSelectorMethods: OmitSelectorMethods
 
     /** Extension methods of `OmitSelector` */
-    trait OmitSelectorMethods:
+    trait OmitSelectorMethods where
       extension (self: OmitSelector)
         def name: String
         def namePos: Position
@@ -2046,7 +2046,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given GivenSelectorMethods: GivenSelectorMethods
 
     /** Extension methods of `GivenSelector` */
-    trait GivenSelectorMethods:
+    trait GivenSelectorMethods where
       extension (self: GivenSelector)
         def bound: Option[TypeTree]
     end GivenSelectorMethods
@@ -2210,7 +2210,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ConstantTypeMethods: ConstantTypeMethods
 
     /** Extension methods of `ConstantType` */
-    trait ConstantTypeMethods:
+    trait ConstantTypeMethods where
       extension (self: ConstantType)
         def constant: Constant
       end extension
@@ -2226,7 +2226,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given NamedTypeMethods: NamedTypeMethods
 
     /** Extension methods of `NamedType` */
-    trait NamedTypeMethods:
+    trait NamedTypeMethods where
       extension (self: NamedType)
         def qualifier: TypeRepr
         def name: String
@@ -2266,7 +2266,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeRefMethods: TypeRefMethods
 
     /** Extension methods of `TypeRef` */
-    trait TypeRefMethods:
+    trait TypeRefMethods where
       extension (self: TypeRef)
         def isOpaqueAlias: Boolean
         def translucentSuperType: TypeRepr
@@ -2318,7 +2318,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given RefinementMethods: RefinementMethods
 
     /** Extension methods of `Refinement` */
-    trait RefinementMethods:
+    trait RefinementMethods where
       extension (self: Refinement)
         def parent: TypeRepr
         def name: String
@@ -2344,7 +2344,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given AppliedTypeMethods: AppliedTypeMethods
 
     /** Extension methods of `AppliedType` */
-    trait AppliedTypeMethods:
+    trait AppliedTypeMethods where
       extension (self: AppliedType)
         def tycon: TypeRepr
         def args: List[TypeRepr]
@@ -2370,7 +2370,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given AnnotatedTypeMethods: AnnotatedTypeMethods
 
     /** Extension methods of `AnnotatedType` */
-    trait AnnotatedTypeMethods:
+    trait AnnotatedTypeMethods where
       extension (self: AnnotatedType)
         def underlying: TypeRepr
         def annotation: Term
@@ -2388,7 +2388,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given AndOrTypeMethods: AndOrTypeMethods
 
     /** Extension methods of `AndOrType` */
-    trait AndOrTypeMethods:
+    trait AndOrTypeMethods where
       extension (self: AndOrType)
         def left: TypeRepr
         def right: TypeRepr
@@ -2444,7 +2444,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given MatchTypeMethods: MatchTypeMethods
 
     /** Extension methods of `MatchType` */
-    trait MatchTypeMethods:
+    trait MatchTypeMethods where
       extension (self: MatchType)
         def bound: TypeRepr
         def scrutinee: TypeRepr
@@ -2471,7 +2471,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ByNameTypeMethods: ByNameTypeMethods
 
     /** Extension methods of `ByNameType` */
-    trait ByNameTypeMethods:
+    trait ByNameTypeMethods where
       extension (self: ByNameType)
         def underlying: TypeRepr
       end extension
@@ -2495,7 +2495,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ParamRefMethods: ParamRefMethods
 
     /** Extension methods of `ParamRef` */
-    trait ParamRefMethods:
+    trait ParamRefMethods where
       extension (self: ParamRef)
         def binder: TypeRepr
         def paramNum: Int
@@ -2520,7 +2520,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ThisTypeMethods: ThisTypeMethods
 
     /** Extension methods of `ThisType` */
-    trait ThisTypeMethods:
+    trait ThisTypeMethods where
       extension (self: ThisType)
         def tref: TypeRepr
       end extension
@@ -2544,7 +2544,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given RecursiveThisMethods: RecursiveThisMethods
 
     /** Extension methods of `RecursiveThis` */
-    trait RecursiveThisMethods:
+    trait RecursiveThisMethods where
       extension (self: RecursiveThis)
         def binder: RecursiveType
       end extension
@@ -2579,7 +2579,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given RecursiveTypeMethods: RecursiveTypeMethods
 
     /** Extension methods of `RecursiveType` */
-    trait RecursiveTypeMethods:
+    trait RecursiveTypeMethods where
       extension (self: RecursiveType)
         def underlying: TypeRepr
         def recThis: RecursiveThis
@@ -2596,7 +2596,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given LambdaTypeMethods: LambdaTypeMethods
 
     /** Extension methods of `LambdaType` */
-    trait LambdaTypeMethods:
+    trait LambdaTypeMethods where
       extension (self: LambdaType)
         def paramNames: List[String]
         def paramTypes: List[TypeRepr]
@@ -2629,7 +2629,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given MethodTypeMethods: MethodTypeMethods
 
     /** Extension methods of `MethodType` */
-    trait MethodTypeMethods:
+    trait MethodTypeMethods where
       extension (self: MethodType)
         def isImplicit: Boolean
         def isErased: Boolean
@@ -2656,7 +2656,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given PolyTypeMethods: PolyTypeMethods
 
     /** Extension methods of `PolyType` */
-    trait PolyTypeMethods:
+    trait PolyTypeMethods where
       extension (self: PolyType)
         def param(idx: Int): TypeRepr
         def paramBounds: List[TypeBounds]
@@ -2682,7 +2682,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeLambdaMethods: TypeLambdaMethods
 
     /** Extension methods of `TypeLambda` */
-    trait TypeLambdaMethods:
+    trait TypeLambdaMethods where
       extension (self: TypeLambda)
         def param(idx: Int) : TypeRepr
         def paramBounds: List[TypeBounds]
@@ -2713,7 +2713,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given MatchCaseMethods: MatchCaseMethods
 
     /** Extension methods of `MatchCase` */
-    trait MatchCaseMethods:
+    trait MatchCaseMethods where
       extension (self: MatchCase)
         /** Pattern `P` of `case P => R` in a `MatchType` */
         def pattern: TypeRepr
@@ -2747,7 +2747,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given TypeBoundsMethods: TypeBoundsMethods
 
     /** Extension methods of `TypeBounds` */
-    trait TypeBoundsMethods:
+    trait TypeBoundsMethods where
       extension (self: TypeBounds)
         def low: TypeRepr
         def hi: TypeRepr
@@ -3031,7 +3031,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ImplicitSearchSuccessMethods: ImplicitSearchSuccessMethods
 
     /** Extension methods of `ImplicitSearchSuccess` */
-    trait ImplicitSearchSuccessMethods:
+    trait ImplicitSearchSuccessMethods where
       extension (self: ImplicitSearchSuccess)
         def tree: Term
       end extension
@@ -3046,7 +3046,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     given ImplicitSearchFailureMethods: ImplicitSearchFailureMethods
 
     /** Extension methods of `ImplicitSearchFailure` */
-    trait ImplicitSearchFailureMethods:
+    trait ImplicitSearchFailureMethods where
       extension (self: ImplicitSearchFailure)
         def explanation: String
       end extension
@@ -3858,7 +3858,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     *  }
     *  ```
     */
-    trait TreeAccumulator[X]:
+    trait TreeAccumulator[X] where
 
       // Ties the knot of the traversal: call `foldOver(x, tree))` to dive in the `tree` node.
       def foldTree(x: X, tree: Tree)(owner: Symbol): X
@@ -3961,7 +3961,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     *  }
     *  ```
     */
-    trait TreeTraverser extends TreeAccumulator[Unit]:
+    trait TreeTraverser extends TreeAccumulator[Unit] where
 
       def traverseTree(tree: Tree)(owner: Symbol): Unit = traverseTreeChildren(tree)(owner)
 
@@ -3981,7 +3981,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     *  }
     *  ```
     */
-    trait TreeMap:
+    trait TreeMap where
 
       def transformTree(tree: Tree)(owner: Symbol): Tree = {
         tree match {
@@ -4138,7 +4138,7 @@ trait Quotes { self: runtime.QuoteUnpickler & runtime.QuoteMatching =>
     end TreeMap
 
     /** Type class used in `show` methods to provide customizable `String` representations */
-    trait Printer[T]:
+    trait Printer[T] where
       /** Show the arguments as a `String` */
       def show(x: T): String
     end Printer

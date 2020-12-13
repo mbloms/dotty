@@ -155,7 +155,7 @@ class LiftComplex extends Lifter {
 }
 object LiftComplex extends LiftComplex
 
-object LiftErased extends LiftComplex:
+object LiftErased extends LiftComplex where
   override def isErased = true
 
 /** Lift all impure or complex arguments to `def`s */

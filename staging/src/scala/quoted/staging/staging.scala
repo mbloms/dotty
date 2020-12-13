@@ -1,6 +1,6 @@
 package scala.quoted
 
-package object staging:
+package object staging where
 
   /** Evaluate the contents of this expression and return the result.
    *  It provides a new Quotes that is only valid within the scope the argument.

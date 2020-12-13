@@ -12,7 +12,7 @@ case class Scala3docExternalDocumentationLink(
 ):
   def withPackageList(url: URL): Scala3docExternalDocumentationLink = copy(packageListUrl = Some(url))
 
-enum DocumentationKind:
+enum DocumentationKind where
   case Javadoc extends DocumentationKind
   case Scaladoc extends DocumentationKind
   case Scala3doc extends DocumentationKind

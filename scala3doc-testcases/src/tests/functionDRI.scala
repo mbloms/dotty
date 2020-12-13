@@ -21,13 +21,13 @@ def b(b: B) = 3
 // class C(val b: Int):
 //   trait b
 
-class D:
-  trait b:
+class D where
+  trait b where
     def b = 8
   def b = 9
 
-class E:
-  class F:
+class E where
+  class F where
     def b = 10
-  object F:
+  object F where
     def b = 11

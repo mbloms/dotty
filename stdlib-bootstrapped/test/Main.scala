@@ -1,9 +1,9 @@
 package hello
 
-enum Color:
+enum Color where
   case Red, Green, Blue
 
-object HelloWorld:
+object HelloWorld where
   def main(args: Array[String]): Unit = {
     println("hello dotty.superbootstrapped!")
     println(Color.Red)

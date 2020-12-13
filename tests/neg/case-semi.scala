@@ -1,4 +1,4 @@
-object Test:
+object Test where
   type X = Int
   val x: X = 1
 

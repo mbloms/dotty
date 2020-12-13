@@ -1,19 +1,19 @@
-object MyBoooleanUnapply:
+object MyBoooleanUnapply where
   inline def unapply(x: Int): Boolean = true
 
-object MyOptionUnapply:
+object MyOptionUnapply where
   inline def unapply(x: Int): Option[Long] = Some(x)
 
-object MyUnapplyImplicits:
+object MyUnapplyImplicits where
   inline def unapply(x: Int)(using DummyImplicit): Option[Long] = Some(x)
 
-object MyPolyUnapply:
+object MyPolyUnapply where
   inline def unapply[T](x: T): Option[T] = Some(x)
 
-object MySeqUnapply:
+object MySeqUnapply where
   inline def unapplySeq(x: Int): Seq[Int] = Seq(x, x)
 
-object MyWhiteboxUnapply:
+object MyWhiteboxUnapply where
   transparent inline def unapply(x: Int): Option[Any] = Some(x)
 
 def test: Unit =

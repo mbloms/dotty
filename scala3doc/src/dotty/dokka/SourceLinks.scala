@@ -6,7 +6,7 @@ import liqp.Template
 import dotty.dokka.model.api._
 import dotty.tools.dotc.core.Contexts.Context
 
-trait SourceLink:
+trait SourceLink where
   val path: Option[Path] = None
   def render(path: String, operation: String, line: Option[Int]): String
 
@@ -31,7 +31,7 @@ case class WebBasedSourceLink(prefix: String, revision: String) extends SourceLi
     val linePart = line.fold("")(l => s"#L$l")
     s"$prefix/$action/$revision/$path$linePart"
 
-object SourceLink:
+object SourceLink where
   val SubPath = "([^=]+)=(.+)".r
   val KnownProvider = raw"(\w+):\/\/([^\/]+)\/([^\/]+)".r
   val BrokenKnownProvider = raw"(\w+):\/\/.+".r
@@ -103,7 +103,7 @@ case class SourceLinks(links: Seq[SourceLink], projectRoot: Path):
   def pathTo(member: Member): Option[String] =
     member.sources.flatMap(s => pathTo(Paths.get(s.path), Option(s.lineNumber).map(_ + 1)))
 
-object SourceLinks:
+object SourceLinks where
 
   val usage =
     """Source links provide a mapping between file in documentation and code repository.

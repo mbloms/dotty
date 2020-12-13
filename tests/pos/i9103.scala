@@ -1,4 +1,4 @@
-object a:
+object a where
   trait Foo[T]
   given Foo[Unit] = ???
 

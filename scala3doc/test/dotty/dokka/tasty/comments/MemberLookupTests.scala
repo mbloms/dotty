@@ -102,7 +102,7 @@ class MemberLookupTests {
   @Test
   def test(): Unit = {
     import scala.tasty.inspector.TastyInspector
-    class Inspector extends TastyInspector:
+    class Inspector extends TastyInspector where
       var alreadyRan: Boolean = false
 
       override def processCompilationUnit(using ctx: quoted.Quotes)(root: ctx.reflect.Tree): Unit =

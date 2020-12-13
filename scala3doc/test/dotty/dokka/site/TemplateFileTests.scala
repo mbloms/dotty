@@ -6,7 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.nio.file.Files
 
-class TemplateFileTests:
+class TemplateFileTests where
   private def testTemplate(code: String, ext: String = "html")(op: TemplateFile => Unit): Unit =
     val tmpFile = Files.createTempFile("headerTests", s".${ext}").toFile()
     try

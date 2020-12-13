@@ -1,4 +1,4 @@
-object inlinetuple:
+object inlinetuple where
   def test: Int =
     f((1, 2))
   inline def f(inline p: (Int, Int)): Int =

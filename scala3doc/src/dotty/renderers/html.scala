@@ -4,7 +4,7 @@ package dotty.dokka
  * This is trivial html renderer using api inspired by ScalaTags
  * It probably could be more efficient but for now on it should be good enough.
  */
-object HTML:
+object HTML where
   type AttrArg = AppliedAttr | Seq[AppliedAttr]
   type TagArg = AppliedTag | Seq[AppliedTag] | String | Seq[String]
 

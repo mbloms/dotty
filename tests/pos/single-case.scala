@@ -1,4 +1,4 @@
-object test:
+object test where
 
   try
     println("hi")

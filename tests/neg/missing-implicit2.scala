@@ -1,6 +1,6 @@
 trait X
 trait Y
-object test:
+object test where
   def f(using x: X) = ???
   object instances {
     given y: Y = ???

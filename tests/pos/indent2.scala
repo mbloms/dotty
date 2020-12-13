@@ -1,6 +1,6 @@
-object testindent:
+object testindent where
 
-  class C:
+  class C where
     val x = 0
 
   val c = new C

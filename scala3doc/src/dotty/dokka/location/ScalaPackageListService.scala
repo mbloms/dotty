@@ -9,10 +9,10 @@ import org.jetbrains.dokka.plugability._
 import collection.JavaConverters._
 import dotty.dokka.withNoOrigin
 
-object ScalaPackageListService:
+object ScalaPackageListService where
   val DOKKA_PARAM_PREFIX = "$dokka"
 
-class ScalaPackageListService(context: DokkaContext, rootPage: RootPageNode):
+class ScalaPackageListService(context: DokkaContext, rootPage: RootPageNode) where
   import ScalaPackageListService._  //Why I need to do this?
 
   val locationProvider = PluginUtils.querySingle[DokkaBase, LocationProviderFactory](context, _.getLocationProviderFactory)

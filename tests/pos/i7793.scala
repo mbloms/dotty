@@ -1,4 +1,4 @@
-trait Foo:
+trait Foo where
   def g(f: Int => Int): Int = 1
   def g(using String)(f: Int => String): String = "2"
 

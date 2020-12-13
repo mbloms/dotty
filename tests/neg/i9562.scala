@@ -1,7 +1,7 @@
-class Foo:
+class Foo where
   def foo = 23
 
-object Unrelated:
+object Unrelated where
   extension (f: Foo)
     def g = f.foo // OK
 

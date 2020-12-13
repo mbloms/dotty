@@ -4,7 +4,7 @@ import org.jetbrains.dokka.model._
 import org.jetbrains.dokka.model.{Projection => JProjection}
 import collection.JavaConverters._
 
-trait TypesSupport:
+trait TypesSupport where
   self: TastyParser =>
   import qctx.reflect._
 

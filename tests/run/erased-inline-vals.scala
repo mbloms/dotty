@@ -3,15 +3,15 @@ abstract class A:
   def x: Int
   val y: Int
 
-class B extends A:
+class B extends A where
   inline def x: Int = 1
   inline val y = 2
 
-class C extends A:
+class C extends A where
   final val x: Int = 3
   final val y = 4
 
-class D:
+class D where
   inline def x: Int = 5
   inline val y = 6
 

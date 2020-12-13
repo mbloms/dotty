@@ -7,10 +7,10 @@ import Settings._
 import org.junit.Test
 import org.junit.Assert._
 
-class ScalaSettingsTests:
+class ScalaSettingsTests where
 
   @Test def `A multistring setting is multivalued`: Unit =
-    class SUT extends SettingGroup:
+    class SUT extends SettingGroup where
       val language: Setting[List[String]] = MultiStringSetting("-language", "feature", "Enable one or more language features.")
     val sut  = SUT()
     val args = tokenize("-language:implicitConversions,dynamics")
@@ -24,7 +24,7 @@ class ScalaSettingsTests:
     assertTrue("Has the feature", set.contains("dynamics"))
 
   @Test def `t9719 Apply -language more than once`: Unit =
-    class SUT extends SettingGroup:
+    class SUT extends SettingGroup where
       val language: Setting[List[String]] = MultiStringSetting("-language", "feature", "Enable one or more language features.")
     val sut  = SUT()
     val args = tokenize("-language:implicitConversions -language:dynamics")
@@ -38,7 +38,7 @@ class ScalaSettingsTests:
     assertTrue("Has the feature", set.contains("dynamics"))
 
   @Test def `Warn if multistring element is supplied multiply`: Unit =
-    class SUT extends SettingGroup:
+    class SUT extends SettingGroup where
       val language: Setting[List[String]] = MultiStringSetting("-language", "feature", "Enable one or more language features.")
     val sut  = SUT()
     val args = tokenize("-language:dynamics -language:implicitConversions -language:dynamics")

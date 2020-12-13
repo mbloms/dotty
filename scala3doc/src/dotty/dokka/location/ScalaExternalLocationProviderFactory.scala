@@ -12,6 +12,6 @@ import org.jetbrains.dokka.plugability._
 import collection.JavaConverters._
 import java.util.{Set => JSet}
 
-class ScalaExternalLocationProviderFactory(using ctx: DokkaContext) extends ExternalLocationProviderFactory:
+class ScalaExternalLocationProviderFactory(using ctx: DokkaContext) extends ExternalLocationProviderFactory where
   override def getExternalLocationProvider(doc: ExternalDocumentation): ExternalLocationProvider =
     ScalaExternalLocationProvider(doc, ".html", DocumentationKind.Scala3doc)

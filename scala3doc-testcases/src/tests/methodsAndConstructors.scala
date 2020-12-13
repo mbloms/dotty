@@ -6,7 +6,7 @@ class C
 class D[T]
 class E[T] extends D[T]
 
-class Constructors(a: String):
+class Constructors(a: String) where
   def this()
   = this("Ala")
 
@@ -14,7 +14,7 @@ class Constructors(a: String):
   = this("Ala")
 
 /** Some methods to tests */
-class Methods:
+class Methods where
  def nobraces: A
  = ???
 

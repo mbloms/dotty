@@ -1,7 +1,7 @@
 import collection.mutable
 
 /** A framework for defining stackable entry point wrappers */
-object EntryPoint:
+object EntryPoint where
 
   /** A base trait for wrappers of entry points.
   *  Sub-traits: Annotation#Wrapper
@@ -33,7 +33,7 @@ object EntryPoint:
   *  Here `<wrapperClass>` and `<wrapperMethod>` are obtained from an
   *  inline call to the `wrapperName` method.
   */
-  trait Annotation extends annotation.StaticAnnotation:
+  trait Annotation extends annotation.StaticAnnotation where
 
     /** The class used for argument parsing. E.g. `scala.util.FromString`, if
     *  arguments are strings, but it could be something else.
@@ -124,7 +124,7 @@ object EntryPoint:
   *      created from @logged, @transactional, and @main, respectively.
   *    - `x` is the argument of the outer $logged$wrapper.
   */
-  trait Adapter extends annotation.StaticAnnotation:
+  trait Adapter extends annotation.StaticAnnotation where
 
     /** Creates a new wrapper around `wrapped` */
     def wrapper(wrapped: EntryPoint.Wrapper): Wrapper

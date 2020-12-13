@@ -57,7 +57,7 @@ extension (dri: DRI)
     extra: String = dri.extra
   ) = new DRI(location, anchor.getOrElse(""), null, target, extra)
 
-object DRI:
+object DRI where
   def apply(
     location: String = "",
     anchor: Option[String] = None,
@@ -102,7 +102,7 @@ extension [V](jset: JSet[V])
   def ++ (other: JSet[V]): JSet[V] =
     Stream.of(jset, other).flatMap(_.stream).collect(Collectors.toSet())
 
-object PluginUtils:
+object PluginUtils where
     import scala.reflect.ClassTag
     import scala.reflect._
     def plugin[T <: DokkaPlugin: ClassTag](ctx: DokkaContext) =

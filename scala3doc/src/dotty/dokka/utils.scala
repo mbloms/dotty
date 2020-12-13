@@ -14,7 +14,7 @@ import java.util.function.Consumer
 import kotlin.jvm.functions.Function2
 import org.jetbrains.dokka.DokkaConfiguration$DokkaSourceSet
 
-class BaseKey[T, V] extends ExtraProperty.Key[T, V]:
+class BaseKey[T, V] extends ExtraProperty.Key[T, V] where
   override def mergeStrategyFor(left: V, right: V): MergeStrategy[T] =
   MergeStrategy.Remove.INSTANCE.asInstanceOf[MergeStrategy[T]]
 

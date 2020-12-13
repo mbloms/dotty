@@ -439,7 +439,7 @@ object Trees {
   }
 
   /** The kind of application */
-  enum ApplyKind:
+  enum ApplyKind where
     case Regular      // r.f(x)
     case Using        // r.f(using x)
     case InfixTuple   // r f (x1, ..., xN) where N != 1;  needs to be treated specially for an error message in typedApply

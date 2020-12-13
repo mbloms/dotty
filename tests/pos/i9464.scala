@@ -1,4 +1,4 @@
-trait T:
+trait T where
   type X
   def x: X
 

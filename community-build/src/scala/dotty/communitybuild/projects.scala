@@ -33,7 +33,7 @@ def exec(projectDir: Path, binary: String, arguments: String*): Int =
  *  projects themselves. This likely requires injecting a custom task in the
  *  projects to output the version number to a file.
  */
-object Versions:
+object Versions where
   val cats = "2.3.1-SNAPSHOT"
   val catsMtl = "1.1+DOTTY-SNAPSHOT"
   val coop = "1.0+DOTTY-SNAPSHOT"
@@ -172,7 +172,7 @@ final case class SbtCommunityProject(
       s"--addPluginSbtFile=$sbtPluginFilePath"
     )
 
-object projects:
+object projects where
 
   private def forceDoc(projects: String*) =
     projects.map(project =>

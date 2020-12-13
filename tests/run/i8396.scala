@@ -1,7 +1,7 @@
-trait Show[A]:
+trait Show[A] where
   def show(a: A): String = a.toString
 
-object Prefix:
+object Prefix where
   type AbstractType
   type UpperBoundedType <: String
   type FullyBoundedType >: String <: String

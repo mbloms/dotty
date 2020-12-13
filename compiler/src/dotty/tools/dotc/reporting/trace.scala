@@ -11,7 +11,7 @@ import core.Mode
  *  is false. The `trace` operation is called in various hotspots, so every tiny bit
  *  of overhead is unacceptable: boxing, closures, additional method calls are all out.
  */
-object trace:
+object trace where
 
   inline def onDebug[TD](inline question: String)(inline op: TD)(using Context): TD =
     conditionally(ctx.settings.YdebugTrace.value, question, false)(op)

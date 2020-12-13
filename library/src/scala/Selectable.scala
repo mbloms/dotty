@@ -23,7 +23,7 @@ package scala
  */
 trait Selectable extends Any
 
-object Selectable:
+object Selectable where
   /* Scala 2 compat + allowing for cross-compilation:
    * enable scala.reflect.Selectable.reflectiveSelectable when there is an
    * import scala.language.reflectiveCalls in scope.

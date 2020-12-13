@@ -1,6 +1,6 @@
 package scala.quoted
 
-object Exprs:
+object Exprs where
 
   /** Matches literal sequence of literal constant value expressions and return a sequence of values.
    *

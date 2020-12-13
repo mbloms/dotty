@@ -8,17 +8,17 @@ enum Enum1
   case B
   case C
 }
-enum Enum2(val i: Int):
+enum Enum2(val i: Int) where
   case A(val s: String) extends Enum2(1)
   case B(val t: String) extends Enum2(2)
   case C(val u: String) extends Enum2(3)
 
-enum Enum3(val param: Int):
+enum Enum3(val param: Int) where
   case A extends Enum3(1) with A
   case B extends Enum3(2)
   case C extends Enum3(3)
 
-enum Enum4[+T]:
+enum Enum4[+T] where
   case G(s: String)
   case B extends Enum4[Int] with A
   case C[V](s:String) extends Enum4[V]

@@ -1,4 +1,4 @@
-enum Filter:
+enum Filter where
   case IsOdd
   case IsPrime
   case LessThan(bound: Int)

@@ -1,6 +1,6 @@
 package pkg
 
-trait Foo:
+trait Foo where
   def foo: this.type
 
 final class Bar extends Foo:

@@ -20,14 +20,14 @@ given A[C] with {}
 
 given [S <: C]: A[S] with {}
 
-class R:
+class R where
   def a = 1
 
 given R: A[Int] with
   def a = 2
 
-class S:
-  class R:
+class S where
+  class R where
     def a = 3
 
   given R: A[Int] with

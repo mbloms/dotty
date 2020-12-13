@@ -6,14 +6,14 @@ trait Liftable[T] {
   def toExpr(x: T): Quotes ?=> Expr[T]
 }
 
-object Lift:
+object Lift where
   def apply[T: Liftable](t: T)(using q: Quotes, ev: Liftable[T]): Expr[T] = ev.toExpr(t)
 
 sealed abstract class SomeEnum
-object SomeEnum:
+object SomeEnum where
   final val Foo = new SomeEnum {}
   final case class Bar[S <: SomeEnum](s: S) extends SomeEnum
-  object Bar:
+  object Bar where
     def apply[S <: SomeEnum](s: S): SomeEnum = new Bar(s)
 
 given LiftFoo: Liftable[Foo.type] with

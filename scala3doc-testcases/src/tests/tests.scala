@@ -151,12 +151,12 @@ class E[T] extends D[T]
   *
   * @param a Hello!
   */
-class Constructors(a: String):
+class Constructors(a: String) where
     def this() = this("Ala")
     def this(a: A)(b: A) = this("Ala")
 
 /** Some methods to tests */
-class Methods:
+class Methods where
  def nobraces: A = ???
  /** Class doc test.
    */
@@ -208,7 +208,7 @@ class Methods:
 
 /** @define foo O's foo.
   */
-object O:
+object O where
 
   /** This is foo: $foo */
   def method(s: String) = s

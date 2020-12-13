@@ -1,9 +1,9 @@
-object test:
+object test where
   def foo(qc: QC): Unit =
     object treeMap extends qc.reflect.TreeMap
 
-trait QC:
+trait QC where
   val reflect: Reflection
-  trait Reflection:
-    trait TreeMap:
+  trait Reflection where
+    trait TreeMap where
       def transformTree: Unit = ???

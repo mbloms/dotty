@@ -1,5 +1,5 @@
-trait T:
-  object O:
+trait T where
+  object O where
     def foo =
       1
     end foo
@@ -11,7 +11,7 @@ end T
 object T
 end T
 
-package p1.p2:
+package p1.p2 where
 
   abstract class C():
 
@@ -42,7 +42,7 @@ package p1.p2:
     def f: String
   end C
 
-  object C:
+  object C where
     given C =
       new C:
         def f = "!"

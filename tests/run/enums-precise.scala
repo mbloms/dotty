@@ -1,8 +1,8 @@
-enum NonEmptyList[+T]:
+enum NonEmptyList[+T] where
   case Many[+U](head: U, tail: NonEmptyList[U]) extends NonEmptyList[U]
   case One [+U](value: U)                       extends NonEmptyList[U]
 
-enum Ast:
+enum Ast where
   case Binding(name: String, tpe: String)
   case Lambda(args: NonEmptyList[Binding], rhs: Ast) // reference to another case of the enum
   case Ident(name: String)

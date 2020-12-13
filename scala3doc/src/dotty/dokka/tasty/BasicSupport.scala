@@ -7,7 +7,7 @@ import dotty.dokka._
 import dotty.dokka.model.api.Annotation
 import dotty.dokka.model.api.TastyDocumentableSource
 
-trait BasicSupport:
+trait BasicSupport where
   self: TastyParser =>
   import qctx.reflect._
   object SymOps extends SymOps[qctx.type](qctx)

@@ -1,6 +1,6 @@
 import scala.quoted._, staging._
 
-object Test:
+object Test where
   given Toolbox = Toolbox.make(getClass.getClassLoader)
 
   val f: Array[Int] => Int = run {

@@ -6,7 +6,7 @@ import Denotations._
 import SymDenotations.LazyType, Names.Name, StdNames.nme
 
 /** Operations that are shared between Namer and TreeUnpickler */
-object NamerOps:
+object NamerOps where
 
   /** The given type, unless `sym` is a constructor, in which case the
    *  type of the constructed instance is returned

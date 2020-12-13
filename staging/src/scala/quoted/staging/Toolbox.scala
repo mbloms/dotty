@@ -6,10 +6,10 @@ import scala.annotation.implicitNotFound
 import scala.quoted.runtime.impl.ScopeException
 
 @implicitNotFound("Could not find implicit scala.quoted.staging.Toolbox.\n\nDefault toolbox can be instantiated with:\n  `given scala.quoted.staging.Toolbox = scala.quoted.staging.Toolbox.make(getClass.getClassLoader)`\n\n")
-trait Toolbox:
+trait Toolbox where
   def run[T](expr: Quotes => Expr[T]): T
 
-object Toolbox:
+object Toolbox where
 
   /** Create a new instance of the toolbox using the the classloader of the application.
    *
@@ -46,7 +46,7 @@ object Toolbox:
   /** Setting of the Toolbox instance. */
   case class Settings private (outDir: Option[String], compilerArgs: List[String])
 
-  object Settings:
+  object Settings where
 
     implicit def default: Settings = make()
 

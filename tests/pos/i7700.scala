@@ -1,12 +1,12 @@
 package test
 
-trait Show[-A]:
+trait Show[-A] where
   def show(a: A): String
 
-object Macros:
+object Macros where
   extension (sc: StringContext) inline def show(args: =>Any*): String = ???
 
-object Show:
+object Show where
   extension [A] (a: A) def show(using S: Show[A]): String = S.show(a)
 
   export Macros.show

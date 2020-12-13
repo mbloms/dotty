@@ -1,6 +1,6 @@
 
-trait QC:
-  object tasty:
+trait QC where
+  object tasty where
     type Tree
     extension (tree: Tree)
       def pos: Tree = ???

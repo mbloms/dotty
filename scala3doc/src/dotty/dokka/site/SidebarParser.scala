@@ -7,12 +7,12 @@ import com.fasterxml.jackson.core.`type`.TypeReference;
 import collection.JavaConverters._
 import java.util.Optional
 
-enum Sidebar:
+enum Sidebar where
   val title: String
   case Category(title: String, nested: List[Sidebar])
   case Page(title: String, url: String)
 
-object Sidebar:
+object Sidebar where
   case class RawInput(var title: String,var url: String, var subsection: JList[RawInput]):
     def this() = this("", "", JList())
 

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dotty.dokka.translators.FilterAttributes
 import java.nio.file.Paths
 
-class ScalaResourceInstaller(using ctx: DocContext) extends PageTransformer:
+class ScalaResourceInstaller(using ctx: DocContext) extends PageTransformer where
   private def dottyRes(resourceName: String) =
     new RendererSpecificResourcePage(resourceName, java.util.ArrayList(), RenderingStrategy$Copy(s"/dotty_res/$resourceName"))
 

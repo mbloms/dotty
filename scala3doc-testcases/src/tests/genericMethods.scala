@@ -1,6 +1,6 @@
 package tests.genericMethods
 
-class Types:
+class Types where
   def orTypes(base: Int | String, nested: List[Int | Double] | Seq[String]): Unit
   = ???
   def andTypes(base: Int & String, nested: List[Int & Double] & Seq[String]): Unit

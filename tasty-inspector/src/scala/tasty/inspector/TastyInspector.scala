@@ -17,7 +17,7 @@ import dotty.tools.dotc.report
 
 import java.io.File.pathSeparator
 
-trait TastyInspector:
+trait TastyInspector where
   self =>
 
   /** Process a TASTy file using TASTy reflect */
@@ -71,17 +71,17 @@ trait TastyInspector:
 
 
   private def inspectorDriver() =
-    class InspectorDriver extends Driver:
+    class InspectorDriver extends Driver where
       override protected def newCompiler(implicit ctx: Context): Compiler = new TastyFromClass
 
-    class TastyInspectorPhase extends Phase:
+    class TastyInspectorPhase extends Phase where
       override def phaseName: String = "tastyInspector"
 
       override def run(implicit ctx: Context): Unit =
         val qctx = QuotesImpl()
         self.processCompilationUnit(using qctx)(ctx.compilationUnit.tpdTree.asInstanceOf[qctx.reflect.Tree])
 
-    class TastyInspectorFinishPhase extends Phase:
+    class TastyInspectorFinishPhase extends Phase where
       override def phaseName: String = "tastyInspectorFinish"
 
       override def runOn(units: List[CompilationUnit])(using Context): List[CompilationUnit] =
@@ -91,7 +91,7 @@ trait TastyInspector:
 
       override def run(implicit ctx: Context): Unit = unsupported("run")
 
-    class TastyFromClass extends TASTYCompiler:
+    class TastyFromClass extends TASTYCompiler where
 
       override protected def frontendPhases: List[List[Phase]] =
         List(new ReadTasty) :: // Load classes from tasty

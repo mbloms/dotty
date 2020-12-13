@@ -34,7 +34,7 @@ def assertMessagesAbout(messages: Seq[String])(patterns: String*) =
     rest
   }
 
-class TestReporter extends ConsoleReporter:
+class TestReporter extends ConsoleReporter where
   val errors = List.newBuilder[Diagnostic]
   val warnings = List.newBuilder[Diagnostic]
   val infos = List.newBuilder[Diagnostic]

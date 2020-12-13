@@ -8,7 +8,7 @@ import org.jetbrains.dokka.pages.{DCI, ContentKind, ContentNode}
 import org.jetbrains.dokka.model.properties.PropertyContainer
 import collection.JavaConverters._
 
-class MemberRenderer(signatureRenderer: SignatureRenderer, buildNode: ContentNode => String)(using DocContext):
+class MemberRenderer(signatureRenderer: SignatureRenderer, buildNode: ContentNode => String)(using DocContext) where
 
   private val converter = new DocTagToContentConverter()
 

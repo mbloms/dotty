@@ -9,7 +9,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.nio.charset.Charset
 
-class ReportingTest:
+class ReportingTest where
   import Scala3doc.Args
 
   private def checkReportedDiagnostics(

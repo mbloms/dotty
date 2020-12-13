@@ -15,7 +15,7 @@ import dotty.tools.dotc.config.Settings._
 import dotty.tools.dotc.config.CommonScalaSettings
 import dotty.dokka.Scala3doc._
 
-class Scala3docArgs extends SettingGroup with CommonScalaSettings:
+class Scala3docArgs extends SettingGroup with CommonScalaSettings where
   val unsupportedSettings = Seq(
     // Options that we like to support
     bootclasspath, extdirs, javabootclasspath, encoding, usejavacp,
@@ -39,7 +39,7 @@ class Scala3docArgs extends SettingGroup with CommonScalaSettings:
 
   def scala3docSpecificSettings: Set[Setting[_]] = Set(sourceLinks, syntax, revision, externalDocumentationMappings)
 
-object Scala3docArgs:
+object Scala3docArgs where
   def extract(args: List[String], rootCtx: CompilerContext):(Scala3doc.Args, CompilerContext) =
     val inst = new Scala3docArgs
     import inst._

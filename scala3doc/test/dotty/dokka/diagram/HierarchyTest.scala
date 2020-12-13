@@ -7,7 +7,7 @@ import dotty.dokka.model.api._
 import scala.jdk.CollectionConverters.{ListHasAsScala, SeqHasAsJava}
 import org.junit.Assert.{assertSame, assertTrue, assertEquals}
 
-class HierarchyTest extends ScaladocTest("hierarchy"):
+class HierarchyTest extends ScaladocTest("hierarchy") where
   override def assertions = Seq(
     AfterDocumentablesTransformation { m =>
       m.visitMembers { x =>

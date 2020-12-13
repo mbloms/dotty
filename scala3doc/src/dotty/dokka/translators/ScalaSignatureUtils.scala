@@ -14,7 +14,7 @@ case class InlineSignatureBuilder(names: Signature = Nil, preName: Signature = N
   override def driLink(text: String, dri: DRI): SignatureBuilder = copy(names = Link(text, dri) +: names)
   override def signature(s: Signature): SignatureBuilder = copy(names = s.reverse ++ names)
 
-object InlineSignatureBuilder:
+object InlineSignatureBuilder where
   def typeSignatureFor(d: Documentable): Signature =
       ScalaSignatureProvider.rawSignature(d, InlineSignatureBuilder()).asInstanceOf[InlineSignatureBuilder].names.reverse
 
@@ -95,6 +95,6 @@ trait SignatureBuilder extends ScalaSignatureUtils {
       }
 }
 
-trait ScalaSignatureUtils:
+trait ScalaSignatureUtils where
   extension (tokens: Seq[String]) def toSignatureString(): String =
     tokens.filter(_.trim.nonEmpty).mkString(""," "," ")

@@ -6,7 +6,7 @@ import java.nio.file.Files
 import scala.sys.process._
 
 
-object Main:
+object Main where
 
   private def generateDocs(project: CommunityProject): Seq[Path] =
     val name = project.project

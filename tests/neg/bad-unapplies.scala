@@ -1,19 +1,19 @@
 trait A
 trait B
 class C extends A, B
-object A:
+object A where
   def unapply(x: A): Option[String] = Some(x.toString)
   def unapply(x: B): Option[String] = Some(x.toString)
 
 object B
 
-object D:
+object D where
   def unapply(x: A, y: B): Option[String] = Some(x.toString)
 
-object E:
+object E where
   val unapply: Option[String] = Some("")
 
-object F:
+object F where
   def unapply(x: Int): Boolean = true
 
 

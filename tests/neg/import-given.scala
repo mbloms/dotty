@@ -25,6 +25,6 @@ object E {
   foo            // ok
   foo(using tc)  // ok
 }
-object F:
+object F where
   import A.{given ?}  // error: unbound wildcard type
 

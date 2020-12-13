@@ -1,5 +1,5 @@
 
-trait D:
+trait D where
    type T
    def trans(other: T): T
 

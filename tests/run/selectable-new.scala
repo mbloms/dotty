@@ -1,6 +1,6 @@
 @main def Test =
   val x =
-    class C extends reflect.Selectable:
+    class C extends reflect.Selectable where
       def name: String = "hello"
     new C
 

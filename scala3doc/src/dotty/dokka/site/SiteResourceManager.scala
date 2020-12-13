@@ -10,7 +10,7 @@ import org.jetbrains.dokka.pages._
 import scala.collection.JavaConverters._
 import dotty.dokka.model.api._
 
-class SiteResourceManager(using ctx: DocContext) extends BaseStaticSiteProcessor:
+class SiteResourceManager(using ctx: DocContext) extends BaseStaticSiteProcessor where
     private def listResources(nodes: Seq[PageNode]): Set[String] =
       nodes.flatMap {
         case it: AContentPage =>

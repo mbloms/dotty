@@ -1,12 +1,12 @@
 
-trait Show[O]:
+trait Show[O] where
   extension (o: O)
     def show: String
 
 class Box[A]
 class Foo
 
-object test:
+object test where
 
   given box[A](using Show[A]): Show[Box[A]] = _.toString
   given foo: Show[Foo] = _.toString

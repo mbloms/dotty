@@ -133,7 +133,7 @@ case class TastyParser(qctx: Quotes, inspector: DokkaTastyInspector)(using val c
 
   def parseRootTree(root: Tree): Seq[Documentable] =
     val docs = Seq.newBuilder[Documentable]
-    object Traverser extends TreeTraverser:
+    object Traverser extends TreeTraverser where
       var seen: List[Tree] = Nil
 
       override def traverseTree(tree: Tree)(owner: Symbol): Unit =

@@ -1,5 +1,5 @@
-class ABug:
-  enum Tag:
+class ABug where
+  enum Tag where
     case first
   import Tag.first
   val xx = first

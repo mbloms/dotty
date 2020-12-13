@@ -1,4 +1,4 @@
-object Foo:
+object Foo where
  locally {
     case class Baz()
   }

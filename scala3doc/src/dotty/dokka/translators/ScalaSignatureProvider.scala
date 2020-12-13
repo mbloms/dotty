@@ -48,7 +48,7 @@ class ScalaSignatureProvider(contentConverter: CommentsToContentConverter)(using
     if m.deprecated.isDefined then styles ++ Set(TextStyle.Strikethrough) else styles
 
 
-object ScalaSignatureProvider:
+object ScalaSignatureProvider where
   def rawSignature(documentable: Documentable, builder: SignatureBuilder): SignatureBuilder =
     documentable.kind match
       case Kind.Extension(_, m) =>

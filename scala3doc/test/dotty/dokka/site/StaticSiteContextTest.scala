@@ -4,7 +4,7 @@ import org.junit.Test
 import org.junit.Assert._
 
 // TODO add negaitve and more details tests
-class SidebarParserTest:
+class SidebarParserTest where
 
   private val sidebar = """sidebar:
     - title: Blog

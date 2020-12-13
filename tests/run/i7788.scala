@@ -1,4 +1,4 @@
-trait Show[-A]:
+trait Show[-A] where
   def show(a:A): String
 
 given Show[String] = x => x

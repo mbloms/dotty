@@ -10,7 +10,7 @@ import dotty.dokka.model.api.Signature
 import dotty.dokka.model.api.HierarchyGraph
 import dotty.dokka.model.api.Member
 
-enum TableStyle extends org.jetbrains.dokka.pages.Style:
+enum TableStyle extends org.jetbrains.dokka.pages.Style where
   case Borderless
   case DescriptionList
   case NestedDescriptionList
@@ -31,7 +31,7 @@ case class HtmlContentNode(
   override def getExtra = extra
   override def withNewExtras(p: PropertyContainer[ContentNode]) = copy(extra = p)
 
-class ScalaTagWrapper(root: DocTag, val name: String) extends TagWrapper(null):
+class ScalaTagWrapper(root: DocTag, val name: String) extends TagWrapper(null) where
   override def getRoot = root
 
 object ScalaTagWrapper {

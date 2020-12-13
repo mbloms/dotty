@@ -6,7 +6,7 @@ import collection.JavaConverters
 import collection.JavaConverters._
 import org.jetbrains.dokka.plugability.DokkaContext
 
-class PackageHierarchyTransformer(context: DokkaContext) extends PageTransformer:
+class PackageHierarchyTransformer(context: DokkaContext) extends PageTransformer where
   override def invoke(input: RootPageNode): RootPageNode = input match {
     case m: ModulePageNode => rearangePackagePages(m)
     case other => {

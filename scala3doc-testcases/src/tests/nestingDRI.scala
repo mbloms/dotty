@@ -2,15 +2,15 @@ package tests.nestingDRI
 
 trait TestClass
 
-class A:
+class A where
   class B
-  object B:
+  object B where
     object C
-    class C:
+    class C where
       object D
 
 
-class AA:
-  object B:
-    class C:
+class AA where
+  object B where
+    class C where
       object D

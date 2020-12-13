@@ -1,4 +1,4 @@
-object Test:
+object Test where
 
 	if true then
 		println(1)   // ok
@@ -7,7 +7,7 @@ object Test:
 	  println(4)   // error
  else ()         // error
 
-	object Test2:
+	object Test2 where
 
 	    if true then
 	      1

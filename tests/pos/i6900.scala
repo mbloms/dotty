@@ -1,5 +1,5 @@
 object Test1 {
-  trait Foo[A]:
+  trait Foo[A] where
     def foo[C]: C => A
 
   // Works with old-style conversion

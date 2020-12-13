@@ -2,7 +2,7 @@ package dotty.communitybuild
 
 import scala.quoted._
 
-object FieldsImpl:
+object FieldsImpl where
   inline def fieldsOfType[V, T](inline v: V): Seq[T] =
     ${ fieldsImpl[V, T]('v) }
 

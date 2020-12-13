@@ -1,23 +1,23 @@
-enum ES:
+enum ES where
   case A
   override def toString: String = "overridden"
 
-enum EJ extends java.lang.Enum[EJ]:
+enum EJ extends java.lang.Enum[EJ] where
   case B
   override def toString: String = "overridden"
 
-trait Mixin extends reflect.Enum:
+trait Mixin extends reflect.Enum where
   override def productPrefix: String = "noprefix"
   override def toString: String = "overridden"
 
-enum EM extends Mixin:
+enum EM extends Mixin where
   case C
 
-enum ET[T] extends java.lang.Enum[ET[_]]:
+enum ET[T] extends java.lang.Enum[ET[_]] where
   case D extends ET[Unit]
   override def toString: String = "overridden"
 
-enum EZ:
+enum EZ where
   case E(arg: Int)
   override def toString: String = "overridden"
 
@@ -25,19 +25,19 @@ enum EC: // control case
   case F
   case G(arg: Int)
 
-enum EO:
+enum EO where
   case H
   case I(arg: Int)
   override def productPrefix: String = "noprefix"
   override def toString: String = "overridden"
 end EO
 
-enum EQ:
+enum EQ where
   case J           extends EQ with Mixin
   case K(arg: Int) extends EQ with Mixin
 
 abstract class Tag[T] extends reflect.Enum
-object Tag:
+object Tag where
   private final class IntTagImpl extends Tag[Int] with runtime.EnumValue:
     def ordinal = 0
     override def hashCode = 123

@@ -9,7 +9,7 @@ abstract class Type[T <: AnyKind] private[scala]:
 end Type
 
 /** Methods to interact with the current `Type[T]` in scope */
-object Type:
+object Type where
 
   /** Show a source code like representation of this type without syntax highlight */
   def show[T](using Type[T])(using Quotes): String =

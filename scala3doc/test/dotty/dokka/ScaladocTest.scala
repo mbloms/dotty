@@ -48,7 +48,7 @@ type Validator = () => Unit
 /**
  * Those assertions map 1-1 to their dokka counterparts. Some of them may be irrelevant in scala3doc.
  */
-enum Assertion:
+enum Assertion where
   case AfterPluginSetup(fn: DokkaContext => Unit)
   case DuringValidation(fn: Validator => Unit)
   case AfterDocumentablesCreation(fn: Seq[DModule] => Unit)

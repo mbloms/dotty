@@ -242,7 +242,7 @@ import transform.SymUtils._
     // the idea is that if the bounds are also not-subtypes of each other to report
     // the type mismatch on the bounds instead of the original TypeParamRefs, since
     // these are usually easier to analyze.
-    object reported extends TypeMap:
+    object reported extends TypeMap where
       def setVariance(v: Int) = variance = v
       val constraint = mapCtx.typerState.constraint
       def apply(tp: Type): Type = tp match
@@ -1192,7 +1192,7 @@ import transform.SymUtils._
            |""".stripMargin
   }
 
-  class UnreducibleApplication(tycon: Type)(using Context) extends TypeMsg(UnreducibleApplicationID):
+  class UnreducibleApplication(tycon: Type)(using Context) extends TypeMsg(UnreducibleApplicationID) where
     def msg = em"unreducible application of higher-kinded type $tycon to wildcard arguments"
     def explain =
       em"""|An abstract type constructor cannot be applied to wildcard arguments.
@@ -1660,7 +1660,7 @@ import transform.SymUtils._
     def explain = "Method inlining prohibits calling superclass methods, as it may lead to confusion about which super is being called."
   }
 
-  class NotAPath(tp: Type, usage: String)(using Context) extends TypeMsg(NotAPathID):
+  class NotAPath(tp: Type, usage: String)(using Context) extends TypeMsg(NotAPathID) where
     def msg = em"$tp is not a valid $usage, since it is not an immutable path"
     def explain =
       i"""An immutable path is

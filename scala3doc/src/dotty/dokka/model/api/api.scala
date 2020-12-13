@@ -10,7 +10,7 @@ import org.jetbrains.dokka.model.properties._
 import org.jetbrains.dokka.pages._
 import dotty.dokka.tasty.comments.Comment
 
-enum Visibility(val name: String):
+enum Visibility(val name: String) where
   case Unrestricted extends Visibility("")
   case Protected(scope: VisibilityScope) extends Visibility("protected")
   case Private(scope: VisibilityScope) extends Visibility("private")
@@ -27,14 +27,14 @@ enum Visibility(val name: String):
     case VisibilityScope.ExplicitModuleScope(name) => s"[$name]"
     case VisibilityScope.ThisScope => "[this]"
 
-enum VisibilityScope:
+enum VisibilityScope where
   case ImplicitTypeScope // private/protected inside a class or a trait
   case ImplicitModuleScope // private/protected inside a package or an object
   case ExplicitTypeScope(typeName: String) // private[X]/protected[X] inside a class or a trait
   case ExplicitModuleScope(moduleName: String) // private[X]/protected[X] inside a package or an object
   case ThisScope // private[this]/protected[this]
 
-enum Modifier(val name: String, val prefix: Boolean):
+enum Modifier(val name: String, val prefix: Boolean) where
   case Abstract extends Modifier("abstract", true)
   case Final extends Modifier("final", true)
   case Empty extends Modifier("", true)
@@ -77,7 +77,7 @@ enum Kind(val name: String){
   case Unknown extends Kind("Unknown")
 }
 
-enum Origin:
+enum Origin where
   case ImplicitlyAddedBy(name: String, dri: DRI)
   case ExtensionFrom(name: String, dri: DRI)
   case ExportedFrom(name: String, dri: Option[DRI])
@@ -90,7 +90,7 @@ case class InheritedFrom(name: String, dri: DRI)
 
 case class Annotation(val dri: DRI, val params: List[Annotation.AnnotationParameter])
 
-object Annotation:
+object Annotation where
   sealed trait AnnotationParameter {
     val name: Option[String]
   }
@@ -119,7 +119,7 @@ case class TypeParameter(
 case class Link(name: String, dri: DRI)
 type Signature = Seq[String | Link]
 
-object Signature:
+object Signature where
   def apply(names: (String | Link)*): Signature = names // TO batter dotty shortcommings in union types
 
 extension (s: Signature)
@@ -133,14 +133,14 @@ case class HierarchyGraph(edges: Seq[(LinkToType, LinkToType)]):
   def ++(edges: Seq[(LinkToType, LinkToType)]): HierarchyGraph = edges.foldLeft(this) {
     case (acc, edge) => acc + edge
   }
-object HierarchyGraph:
+object HierarchyGraph where
   def empty = HierarchyGraph(Seq.empty)
   def withEdges(edges: Seq[(LinkToType, LinkToType)]) = HierarchyGraph.empty ++ edges
 
 
 type Member = Documentable
 
-object Member:
+object Member where
   def unapply(d: Documentable): Option[(String, DRI, Visibility, Kind, Origin)] =
     d.memberExt.map(v => (d.getName, d.getDri, v.visibility, v.kind, v.origin))
 

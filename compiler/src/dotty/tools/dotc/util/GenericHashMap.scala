@@ -1,7 +1,7 @@
 package dotty.tools
 package dotc.util
 
-object GenericHashMap:
+object GenericHashMap where
 
   /** The number of elements up to which dense packing is used.
    *  If the number of elements reaches `DenseLimit` a hash table is used instead

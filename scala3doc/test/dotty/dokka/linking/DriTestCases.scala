@@ -12,7 +12,7 @@ class GenericTest extends DriTest("genericDRI")
 
 class FunctionTest extends DriTest("functionDRI")
 
-class NestingTest extends DriTest("nestingDRI"):
+class NestingTest extends DriTest("nestingDRI") where
   override def assertOnDRIs(dris: Seq[DRI]) =
     println(dris.groupBy(_.location).map(_._1))
     dris.groupBy(_.location).foreach{ case (location, dris) =>

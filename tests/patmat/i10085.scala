@@ -1,10 +1,10 @@
-enum Bool:
+enum Bool where
   case True
   case False
 
 import Bool._
 
-enum SBool[B <: Bool]:
+enum SBool[B <: Bool] where
   case STrue extends SBool[True.type]
   case SFalse extends SBool[False.type]
 

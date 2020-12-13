@@ -1,34 +1,34 @@
-trait ObjectInterface:
+trait ObjectInterface where
   def equals(obj: Any): Boolean
   def hashCode(): Int
   def toString(): String
 
-trait SAMPlainWithExtends extends ObjectInterface:
+trait SAMPlainWithExtends extends ObjectInterface where
   def first(): String
 
-trait SAMCovariantOutExtends[+O] extends ObjectInterface:
+trait SAMCovariantOutExtends[+O] extends ObjectInterface where
   def first(): O
 
-trait SAMContravariantInExtends[-I] extends ObjectInterface:
+trait SAMContravariantInExtends[-I] extends ObjectInterface where
   def first(in: I): Unit
 
-trait SAMInvariantExtends[T] extends ObjectInterface:
+trait SAMInvariantExtends[T] extends ObjectInterface where
   def first(in: T): T
 
-trait SAMInOutExtends[-I, +O] extends ObjectInterface:
+trait SAMInOutExtends[-I, +O] extends ObjectInterface where
   def first(in: I): O
 
 type CustomString = String
 type CustomBoolean = Boolean
 type CustomInt = Int
 
-trait SAMWithCustomAliases:
+trait SAMWithCustomAliases where
   def first(): String
   def equals(obj: Any): CustomBoolean
   def hashCode(): CustomInt
   def toString(): CustomString
 
-object Test:
+object Test where
 
   def main(args: Array[String]): Unit =
     val samPlainWithExtends : SAMPlainWithExtends = () => "o"

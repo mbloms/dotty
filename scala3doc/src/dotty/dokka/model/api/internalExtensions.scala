@@ -35,7 +35,7 @@ case class MemberExtension(
 ) extends ExtraProperty[Documentable]:
  override def getKey = MemberExtension
 
-object MemberExtension extends BaseKey[Documentable, MemberExtension]:
+object MemberExtension extends BaseKey[Documentable, MemberExtension] where
   val empty = MemberExtension(Visibility.Unrestricted, Nil, Kind.Unknown, Nil, Signature(), None)
 
 case class CompositeMemberExtension(
@@ -47,7 +47,7 @@ case class CompositeMemberExtension(
 ) extends ExtraProperty[Documentable]:
   override def getKey = CompositeMemberExtension
 
-object CompositeMemberExtension extends BaseKey[Documentable, CompositeMemberExtension]:
+object CompositeMemberExtension extends BaseKey[Documentable, CompositeMemberExtension] where
   val empty = CompositeMemberExtension()
 
   override def mergeStrategyFor(left: CompositeMemberExtension, right: CompositeMemberExtension) =

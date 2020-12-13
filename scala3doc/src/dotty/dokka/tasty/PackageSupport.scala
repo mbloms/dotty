@@ -10,7 +10,7 @@ import dotty.dokka.model.api.CompositeMemberExtension
 
 import collection.JavaConverters._
 
-trait PackageSupport:
+trait PackageSupport where
     self: TastyParser =>
     import qctx.reflect._
 

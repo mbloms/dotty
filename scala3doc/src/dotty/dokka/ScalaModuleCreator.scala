@@ -14,7 +14,7 @@ import org.jetbrains.dokka.base.parsers.MarkdownParser
 import collection.JavaConverters._
 import kotlin.coroutines.Continuation
 
-class ScalaModuleProvider(using ctx: DocContext) extends SourceToDocumentableTranslator:
+class ScalaModuleProvider(using ctx: DocContext) extends SourceToDocumentableTranslator where
    override def invoke(sourceSet: DokkaSourceSet, cxt: DokkaContext, unused: Continuation[? >: DModule]) =
     val result = DokkaTastyInspector(new MarkdownParser(_ => null)).result()
 
@@ -29,6 +29,6 @@ class ScalaModuleProvider(using ctx: DocContext) extends SourceToDocumentableTra
       PropertyContainer.Companion.empty() plus ModuleExtension(result.flatMap(flattenMember).toMap)
     )
 
-object EmptyModuleProvider extends SourceToDocumentableTranslator:
+object EmptyModuleProvider extends SourceToDocumentableTranslator where
    override def invoke(sourceSet: DokkaSourceSet, cxt: DokkaContext, unused: Continuation[? >: DModule]) =
     DModule("", JList(), Map.empty.asJava, null, Set(sourceSet).asJava, PropertyContainer.Companion.empty())

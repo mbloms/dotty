@@ -135,7 +135,7 @@ object ProtoTypes {
 
   final class CachedIgnoredProto(ignored: Type) extends IgnoredProto(ignored)
 
-  object IgnoredProto:
+  object IgnoredProto where
     def apply(ignored: Type)(using Context): IgnoredProto = ignored match
       case ignored: IgnoredProto => ignored
       case _ => unique(CachedIgnoredProto(ignored))

@@ -16,7 +16,7 @@ import dotty.tools.dotc.config.CommonScalaSettings
 import dotty.tools.dotc.reporting.Reporter
 
 
-class Scala3DocDokkaLogger(using CompilerContext) extends DokkaLogger:
+class Scala3DocDokkaLogger(using CompilerContext) extends DokkaLogger where
   def debug(msg: String): Unit = report.debuglog(msg)
 
   // We do not want errors from dokka (that are) not critical to fail our runs
@@ -40,12 +40,12 @@ class Scala3DocDokkaLogger(using CompilerContext) extends DokkaLogger:
   def setErrorsCount(count: Int): Unit = errors = count
   def setWarningsCount(count: Int): Unit = warnings = count
 
-object Scala3doc:
-  enum CommentSyntax:
+object Scala3doc where
+  enum CommentSyntax where
     case Wiki
     case Markdown
 
-  object CommentSyntax:
+  object CommentSyntax where
     def parse(str: String) = str match
         case "wiki" => Some(CommentSyntax.Wiki)
         case "markdown" => Some(CommentSyntax.Markdown)

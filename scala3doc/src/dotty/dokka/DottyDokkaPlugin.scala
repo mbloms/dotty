@@ -37,7 +37,7 @@ import dotty.dokka.site.StaticSiteLocationProviderFactory
   *
   * Most of the work of parsing Tasty is done by [[DokkaTastyInspector]].
   */
-class DottyDokkaPlugin extends DokkaJavaPlugin:
+class DottyDokkaPlugin extends DokkaJavaPlugin where
 
   lazy val dokkaBase = plugin(classOf[DokkaBase])
 

@@ -2,10 +2,10 @@ package tests
 
 package implicitMembers
 
-class OuterClass:
+class OuterClass where
   class ImplicitMemberTarget
 
-  object ImplicitMemberTarget:
+  object ImplicitMemberTarget where
     extension (a: ImplicitMemberTarget)
       def extensionFromCompanion: String =
         "ImplicitMemberTarget"

@@ -28,7 +28,7 @@ import org.jetbrains.dokka.base.renderers.html.SearchbarDataInstaller
 import org.jsoup.Jsoup
 import java.nio.file.Paths
 
-class SignatureRenderer(pageContext: ContentPage, sourceSetRestriciton: JSet[DisplaySourceSet], locationProvider: LocationProvider):
+class SignatureRenderer(pageContext: ContentPage, sourceSetRestriciton: JSet[DisplaySourceSet], locationProvider: LocationProvider) where
   def link(dri: DRI): Option[String] = Option(locationProvider.resolve(dri, sourceSetRestriciton, pageContext))
 
   def renderLink(name: String, dri: DRI, modifiers: AppliedAttr*) =

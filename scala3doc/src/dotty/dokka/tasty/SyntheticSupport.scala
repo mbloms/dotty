@@ -2,7 +2,7 @@ package dotty.dokka.tasty
 
 import scala.quoted._
 
-trait SyntheticsSupport:
+trait SyntheticsSupport where
   self: TastyParser =>
 
   import qctx.reflect._

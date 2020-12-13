@@ -12,7 +12,7 @@ import scala.collection.JavaConverters._
 
 import dotty.dokka.model.api._
 
-class SitePagesCreator(using ctx: DocContext) extends BaseStaticSiteProcessor:
+class SitePagesCreator(using ctx: DocContext) extends BaseStaticSiteProcessor where
   private def mkRootPage(input: RootPageNode, children: List[PageNode]): AContentPage =
     input match
       case input: ContentPage =>

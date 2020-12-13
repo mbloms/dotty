@@ -26,7 +26,7 @@ import dotty.tools.dotc.core.Contexts._
   *   actually generates the documentation.
   * - [](package.DocContext) is our config for Dokka
   */
-object Main:
+object Main where
   def main(args: Array[String]): Unit =
     try
       // We should create our own context here...

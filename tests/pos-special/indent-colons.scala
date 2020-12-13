@@ -1,4 +1,4 @@
-object Test:
+object Test where
 
   locally:
     var x = 0
@@ -56,7 +56,7 @@ object Test:
     x < 10
   do ()
 
-class Test2:
+class Test2 where
   self =>
   def foo = 1
 
@@ -67,15 +67,15 @@ class Test2:
   end x
 end Test2
 
-class Test3:
+class Test3 where
  self =>
   def foo = 1
 
 import collection.mutable.HashMap
 
-class Coder(words: List[String]):
+class Coder(words: List[String]) where
 
-  class Foo:
+  class Foo where
     println()
   end Foo
 
@@ -114,5 +114,5 @@ class Coder(words: List[String]):
         case (digit, str) => str map (ltr => ltr -> digit)
 end Coder
 
-object Test22:
+object Test22 where
   def foo: Int = 22

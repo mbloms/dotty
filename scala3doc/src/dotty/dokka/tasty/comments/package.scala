@@ -6,13 +6,13 @@ import scala.jdk.CollectionConverters._
 import org.jetbrains.dokka.model.{doc => dkkd}
 import com.vladsch.flexmark.util.{ast => mdu}
 
-object kt:
+object kt where
   import kotlin.collections.builders.{ListBuilder => KtListBuilder, MapBuilder => KtMapBuilder}
 
   def emptyList[T] = new KtListBuilder[T]().build()
   def emptyMap[A, B] = new KtMapBuilder[A, B]().build()
 
-object dkk:
+object dkk where
   def p(children: dkkd.DocTag*) =
     dkkd.P(children.asJava, Map.empty.asJava)
   def p(params: (String, String)*)(children: dkkd.DocTag*) =
@@ -50,7 +50,7 @@ object dkk:
   def li(params: (String, String)*)(children: dkkd.DocTag*) =
     dkkd.Li(children.asJava, params.toMap.asJava)
 
-object dbg:
+object dbg where
   case class See(n: mdu.Node, c: Seq[See]) {
     def show(sb: StringBuilder, indent: Int): Unit = {
       sb ++= " " * indent
